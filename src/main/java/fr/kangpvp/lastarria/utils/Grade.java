@@ -26,7 +26,12 @@ public class Grade {
     private List<String> content;
     private String previousName;
 
-    public Grade(ItemStack item, String name, String color, int hour, int price, Grade previousGrade, List<String> avantages) {
+    public Grade(int slot, String name, String color, int hour, int price, Grade previousGrade, List<String> avantages) {
+        Location loc = new Location(Bukkit.getWorld("Aragnok"), 736, 144, 15);
+        Chest ChestGrade = (Chest) loc.getBlock().getState();
+        Inventory InvGradeData = ChestGrade.getInventory();
+
+        if(!loc.getBlock().getType().equals(Material.CHEST)) return;
 
         this.item = item;
 

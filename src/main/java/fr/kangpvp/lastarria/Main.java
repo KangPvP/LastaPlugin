@@ -15,7 +15,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), (Plugin)this);
 
     }
-
+    //           wesh salut     Yo la famille    Wshhh comment cv
     @Override
     public void onDisable() {
         // Plugin shutdown logic
