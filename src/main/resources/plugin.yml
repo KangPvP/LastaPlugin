@@ -1,0 +1,9 @@
+name: Lastarria
+version: '${project.version}'
+main: fr.kangpvp.lastarria.Main
+api-version: 1.18
+authors: [ KangPvP ]
+description: Serveur Survie
+commands:
+  boutique:
+
