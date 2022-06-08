@@ -23,8 +23,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class CommandBoutique implements CommandExecutor {
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, java.lang.String label, java.lang.String[] args) {
+
         if(sender instanceof Player){
             Player player = (Player) sender;
 
