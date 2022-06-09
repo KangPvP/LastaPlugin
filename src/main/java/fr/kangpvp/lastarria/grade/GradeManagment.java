@@ -1,6 +1,5 @@
 package fr.kangpvp.lastarria.grade;
 
-import fr.kangpvp.lastarria.Main;
 import fr.kangpvp.lastarria.utils.Grade;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -20,10 +19,10 @@ public class GradeManagment {
 
     }
 
-    public static Grade getGrade(Player player) {
+   // public static Grade getGrade(Player player) {
 
         return Grades.getGradeFromName(gradeConfig.get(player.getUniqueId().toString()).toString());
 
-    }
+    //}
 
 }

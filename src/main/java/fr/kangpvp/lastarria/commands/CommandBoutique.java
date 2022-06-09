@@ -2,9 +2,8 @@ package fr.kangpvp.lastarria.commands;
 
 import com.google.common.collect.Lists;
 
-import fr.kangpvp.lastarria.grade.GradeManagment;
-import fr.kangpvp.lastarria.grade.Grades;
 import fr.kangpvp.lastarria.utils.Grade;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,6 +39,9 @@ public class CommandBoutique implements CommandExecutor {
 
             Location loc = new Location(Bukkit.getWorld("Aragnok"), 736, 144, 15);
 
+            String test = PlaceholderAPI.setPlaceholders(player, "%luckperms_inherited_groups%");
+            Bukkit.broadcastMessage("Yo tu es: " + test);
+
             if(loc.getBlock().getType().equals(Material.CHEST)){
 
                 Chest ChestGrade = (Chest) loc.getBlock().getState();
@@ -51,89 +53,77 @@ public class CommandBoutique implements CommandExecutor {
                 cle.setItemMeta(cleM);
                 InvGradeData.addItem(cle);
 
-                ItemStack Vilain = InvGradeData.getItem(0); //Vilain
+                ItemStack Vilain = InvGradeData.getItem(0);
                 ItemMeta vilainMeta = Vilain.getItemMeta();
                 vilainMeta.setDisplayName("§8§lVilain");
                 vilainMeta.setLore(Arrays.asList(
                         "                                                        ",
-                        "§8§nAccès de base",
+                        "§7 • de base",
                         "§7 • 2 items en vente",
                         "§7 • ATM 0.5$/min",
                         "§7 • /tpa cooldown de 10min"));
-
                 Vilain.setItemMeta(vilainMeta);
 
-                //Paysan
-                List<String> listPaysan = new ArrayList<String>();
+                List<String> listPaysan = new ArrayList<>();
                 listPaysan.add("3 items en vente");
                 listPaysan.add("2 homes");
                 Grade paysanGrade = new Grade(1, "Paysan", "2", 0, 300, null, listPaysan);
 
-                //Commercant
-                List<String> listCommercant = new ArrayList<String>();
+                List<String> listCommercant = new ArrayList<>();
                 listCommercant.add("4 items en vente");
                 listCommercant.add("ATM 1$/min");
                 Grade commercantGrade = new Grade(2, "Commercant", "2", 3, 1400, null, listCommercant);
 
-                //Artisan
-                List<String> listArtisan = new ArrayList<String>();
+                List<String> listArtisan = new ArrayList<>();
                 listArtisan.add("5 items en vente");
                 listArtisan.add("3 homes");
                 listArtisan.add("/tpa cooldown 3 min");
                 Grade artisanGrade = new Grade(3, "Artisan", "2", 7, 1400, null, listArtisan);
 
-                //Ecuyer
-                List<String> listEcuyer = new ArrayList<String>();
+                List<String> listEcuyer = new ArrayList<>();
                 listEcuyer.add("6 items en vente");
                 listEcuyer.add("ATM 1.5$/min");
                 Grade ecuyerGrade = new Grade(4, "Ecuyer", "2", 20, 1400, null, listEcuyer);
 
-                //Vassal
-                List<String> listVassal = new ArrayList<String>();
+                List<String> listVassal = new ArrayList<>();
                 listVassal.add("7 items en vente");
                 listVassal.add("+ 1 home (Votre nombre de home)");
-                listVassal.add("Accès au /tpahere (cooldown 10 min)");
+                listVassal.add("Acces au /tpahere (cooldown 10 min)");
                 Grade vassalGrade = new Grade(5, "Vassal", "9", 32, 1400, null, listVassal);
 
-                //Chevalier
-                List<String> listChevalier = new ArrayList<String>();
+                List<String> listChevalier = new ArrayList<>();
                 listChevalier.add("8 items en vente");
                 listChevalier.add("ATM 2$/min");
                 Grade chevalierGrade = new Grade(6, "Chevalier", "9", 52, 1400, null, listChevalier);
 
-                //Chatelain
-                List<String> listChatelain = new ArrayList<String>();
+                List<String> listChatelain = new ArrayList<>();
                 listChatelain.add("9 items en vente");
                 listChatelain.add("5 homes");
                 listChatelain.add("/tpa 30s de Cooldown");
                 Grade chatelainGrade = new Grade(7, "Chatelain", "9", 84, 1400, null, listChatelain);
 
-                //Baron
-                List<String> listBaron = new ArrayList<String>();
+                List<String> listBaron = new ArrayList<>();
                 listBaron.add("10 items en vente");
                 listBaron.add("ATM 2.5$/min");
                 Grade baronGrade = new Grade(8, "Baron", "e", 135, 1400, null, listBaron);
 
-                //Comte
-                List<String> listCompte = new ArrayList<String>();
+                List<String> listCompte = new ArrayList<>();
                 listCompte.add("11 items en vente");
                 listCompte.add("6 homes");
                 listCompte.add("/tpahere 3min de Cooldown");
                 Grade comteGrade = new Grade(9, "Comte", "e", 216, 1400, null, listChevalier);
 
-                //Duc
-                List<String> listDuc = new ArrayList<String>();
+                List<String> listDuc = new ArrayList<>();
                 listDuc.add("12 items en vente");
                 listDuc.add("ATM 3$/min");
                 Grade ducGrade = new Grade(10, "Duc", "e", 345, 1400, null, listDuc);
 
-                //Seigneur
-                List<String> listSeigneur = new ArrayList<String>();
+                List<String> listSeigneur = new ArrayList<>();
                 listDuc.add("13 items en vente");
                 listDuc.add("7 homes");
-                Grade seigneurGrade = new Grade(11, "Seigneur", "c", 553, 1400, null, listSeigneur);
+                Grade seigneurGrade = new Grade(10, "Seigneur", "c", 553, 1400, null, listSeigneur);
 
-                Inventory inv = Bukkit.createInventory(null, 54, "Boutique");
+                Inventory inv = Bukkit.createInventory(null, 54, "§e§lTitres");
 
                 inv.setItem(11, Vilain);
                 inv.setItem(12, paysanGrade.getItem());
@@ -148,10 +138,40 @@ public class CommandBoutique implements CommandExecutor {
                 inv.setItem(32, ducGrade.getItem());
                 inv.setItem(40, seigneurGrade.getItem());
 
+                ItemStack blackWindows = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
 
-                inv.setItem(2, myAwesomeSkull);
-                inv.setItem(1, Vilain);
-                inv.setItem(0, new ItemStack(Material.NETHERITE_SWORD));
+                inv.setItem(0, blackWindows);
+                inv.setItem(1, blackWindows);
+                inv.setItem(2, blackWindows);
+                inv.setItem(3, blackWindows);
+                inv.setItem(4, blackWindows);
+                inv.setItem(5, blackWindows);
+                inv.setItem(6, blackWindows);
+                inv.setItem(7, blackWindows);
+                inv.setItem(8, blackWindows);
+
+                inv.setItem(17, blackWindows);
+                inv.setItem(26, blackWindows);
+                inv.setItem(35, blackWindows);
+                inv.setItem(45, blackWindows);
+                inv.setItem(53, blackWindows); //fermer le menu
+
+                inv.setItem(52, blackWindows);
+                inv.setItem(51, blackWindows);
+                inv.setItem(50, blackWindows);
+                inv.setItem(49, blackWindows);
+                inv.setItem(48, blackWindows);
+                inv.setItem(47, blackWindows);
+                inv.setItem(46, blackWindows);
+                inv.setItem(45, blackWindows); //retour au menu principal
+
+                inv.setItem(36, blackWindows);
+                inv.setItem(27, blackWindows);
+                inv.setItem(18, blackWindows);
+                inv.setItem(9, blackWindows);
+
+
+
                 player.openInventory(inv);
             } else {
                 player.sendMessage("Erreur: Les datas de cette commande ne sont pas chargé\nMerci de contacter KangPvP pour régler ce bug");

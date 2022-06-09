@@ -71,12 +71,6 @@ public class Grade {
         return this.name;
     }
 
-    public String getNameWithoutColor() {
-        return name;
-    }
-
-
-
     public List<String> getContent() {
         return this.content;
     }
