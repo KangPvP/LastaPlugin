@@ -2,6 +2,8 @@ package fr.kangpvp.lastarria.commands;
 
 import com.google.common.collect.Lists;
 
+import fr.kangpvp.lastarria.grade.GradeManagment;
+import fr.kangpvp.lastarria.grade.Grades;
 import fr.kangpvp.lastarria.utils.Grade;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -99,7 +101,6 @@ public class CommandBoutique implements CommandExecutor {
                 ItemStack Comte = InvGradeData.getItem(9); //Comte
                 ItemStack Duc = InvGradeData.getItem(10); //Duc
                 ItemStack Seigneur = InvGradeData.getItem(11); //Seigneur
-
 
                 Inventory inv = Bukkit.createInventory(null, 54, "Boutique");
 
