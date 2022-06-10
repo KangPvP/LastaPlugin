@@ -37,7 +37,7 @@ public enum Grades {
                 gradeReturn = gradeArray.get(i).getGrade();
             }
         }
-
+        System.out.println("Test 686");
         return gradeReturn;
 
     }
