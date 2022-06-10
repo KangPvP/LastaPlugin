@@ -42,7 +42,7 @@ public class PlayerListener implements Listener {
             event.setCancelled(true);
             switch (slot) {
                 case 11:
-                    if(listGrade.contains("barons")) {
+                    if(listGrade.contains("vagabond")) {
                         Bukkit.broadcastMessage("Yo tu es: " + listGrade);
                     } else {
                         player.sendMessage("Vous ne pouvez pas acheter ce grade");
