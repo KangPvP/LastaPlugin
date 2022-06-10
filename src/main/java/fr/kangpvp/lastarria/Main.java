@@ -1,6 +1,7 @@
 package fr.kangpvp.lastarria;
 
 import fr.kangpvp.lastarria.commands.CommandBoutique;
+import fr.kangpvp.lastarria.commands.CommandRank;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
 import org.bukkit.Bukkit;
@@ -12,6 +13,13 @@ public final class Main extends JavaPlugin {
     public static Main INSTANCE;
     @Override
     public void onEnable() {
+        INSTANCE = this;
+        //LoadConfigFile
+        ConfigManager.getInstance().setup();
+        ConfigManager.getInstance().reloadPlayersData();
+        ConfigManager.getInstance().savePlayersData();
+
+        Bukkit.getPluginCommand("rank").setExecutor((CommandExecutor) new CommandRank());
         Bukkit.getPluginCommand("boutique").setExecutor((CommandExecutor) new CommandBoutique());
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(), (Plugin)this);
 

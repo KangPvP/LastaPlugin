@@ -1,6 +1,7 @@
 package fr.kangpvp.lastarria.grade;
 
 import fr.kangpvp.lastarria.utils.Grade;
+import org.bukkit.Bukkit;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,8 +28,12 @@ public enum Grades {
         Grade gradeReturn = null;
         List<Grades> gradeArray = Arrays.stream(Grades.class.getEnumConstants()).collect(Collectors.toList());
 
+
         for(int i = 0 ; i < gradeArray.size() ; i ++) {
-            if(gradeArray.get(i).getGrade().getNameWithoutColor() == name) {
+
+            if(gradeArray.get(i).getGrade().getNameWithoutColor().toLowerCase().equals(name.toLowerCase().substring(4))) {
+                System.out.println("test42");
+                System.out.println(gradeArray.get(i).getGrade());
                 gradeReturn = gradeArray.get(i).getGrade();
             }
         }

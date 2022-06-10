@@ -15,6 +15,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import javax.swing.*;
+import java.sql.Timestamp;
 
 public class PlayerListener implements Listener {
 
@@ -31,16 +32,22 @@ public class PlayerListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
         InventoryView invtest = event.getView();
-        ItemStack item = event.getCurrentItem();
         int slot = event.getSlot();
+        ItemStack test = event.getCurrentItem();
 
-        String listGrade = PlaceholderAPI.setPlaceholders(player, "%luckperms_inherited_groups%");
+        String listGrade = PlaceholderAPI.setPlaceholders(player, "%player_time%");
+        Timestamp ts = new Timestamp(Integer.parseInt((String) listGrade));
+        Bukkit.broadcastMessage("Yo tu es: OKOKOOKO:" + ts.toString() + test.getItemMeta().getDisplayName().substring(4).toString());
 
-        if(item == null) return;
-        player.sendMessage("Test tets");
+        if(test == null) return;
+        Bukkit.broadcastMessage("Test 563" + Grades.getGradeFromName(test.getItemMeta().getDisplayName()));
         if(invtest.getTitle().equals("§e§lTitres")) {
             event.setCancelled(true);
-            switch (slot) {
+            Grades.getGradeFromName(test.getItemMeta().getDisplayName()).performAction(player);
+            Bukkit.broadcastMessage("Test 567");
+
+
+            /*switch (slot) {
                 case 11:
                     if(listGrade.contains("vagabond")) {
                         Bukkit.broadcastMessage("Yo tu es: " + listGrade);
