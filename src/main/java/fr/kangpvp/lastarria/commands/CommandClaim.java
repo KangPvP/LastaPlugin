@@ -1,6 +1,7 @@
 package fr.kangpvp.lastarria.commands;
 
 import fr.kangpvp.lastarria.Main;
+import fr.kangpvp.lastarria.utils.ClaimManager;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,13 +17,11 @@ public class CommandClaim implements CommandExecutor {
 
             Chunk chunk = player.getLocation().getChunk();
 
-            String chunkID = chunk.getX() + "." + chunk.getZ();
-
-            if (Main.INSTANCE.isChunk(chunkID)) {
-                player.sendMessage("§3Ce chunk appartient déjà à quelqu'un");
-            }else {
-                Main.INSTANCE.addChunk(chunkID, player.getUniqueId());
-                player.sendMessage("§3Tu as claim ce chunk");
+            if (ClaimManager.isChunkClaimed(chunk)) {
+                player.sendMessage("§3Ce chunk est déja claim !");
+            } else {
+                ClaimManager.claimChunk(chunk, player);
+                player.sendMessage("§3Vous avez claim un chunk.");
             }
         }
 

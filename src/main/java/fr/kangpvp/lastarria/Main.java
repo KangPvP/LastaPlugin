@@ -14,13 +14,13 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public final class Main extends JavaPlugin {
 
     public static Main INSTANCE;
 
-    public static HashMap<String, UUID> chunks = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -51,19 +51,5 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
 
     }
-    public void addChunk(String chunk, UUID owner) {
-        chunks.put(chunk, owner);
-    }
 
-    public boolean isChunk(String chunk) {
-        return chunks.containsKey(chunk);
-    }
-
-    public UUID getOwner(String chunk) {
-        return chunks.get(chunk);
-    }
-
-    public void removeChunk(String chunk, UUID owner) {
-        chunks.remove(chunk, owner);
-    }
 }

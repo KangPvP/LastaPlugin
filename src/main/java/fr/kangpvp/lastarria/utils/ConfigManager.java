@@ -22,25 +22,25 @@ public class ConfigManager {
 	
 	// File & File config => Here
 	public static FileConfiguration pdatacfg;
-	private File playersdatafile;
+	private File claimsfile;
 	// ......................
 
 	public void setup() {
 		if (!plugin.getDataFolder().exists()) {
 			plugin.getDataFolder().mkdir();
 		}
-		playersdatafile = new File(plugin.getDataFolder(), "playersdata.yml");
+		claimsfile = new File(plugin.getDataFolder(), "playersdata.yml");
 		
-		if (!playersdatafile.exists()) {
+		if (!claimsfile.exists()) {
 			try {
-				playersdatafile.createNewFile();
-				Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le ficher playersdata.yml a ete cree");
+				claimsfile.createNewFile();
+				Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le ficher claims.yml a ete cree");
 			} catch (IOException e) {
-				Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Le ficher playersdata.yml n'a pas pu etre cree");
+				Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Le ficher claims.yml n'a pas pu etre cree");
 			}
 		}
 		
-		pdatacfg = YamlConfiguration.loadConfiguration(playersdatafile);
+		pdatacfg = YamlConfiguration.loadConfiguration(claimsfile);
 		
 		pdatacfg.set("tetesssss", "test"); //test ecriture
 		
@@ -52,18 +52,18 @@ public class ConfigManager {
 
 	public void savePlayersData() {
 		try {
-			pdatacfg.save(playersdatafile);
-			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le fichier playersdata.yml a ete sauvegarde");
+			pdatacfg.save(claimsfile);
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le fichier claims.yml a ete sauvegarde");
 		} catch (IOException e) {
-			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le fichier playersdata.yml n'a pas pu etre sauvegarde");
+			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le fichier claims.yml n'a pas pu etre sauvegarde");
 		}
 
 	}
 	
 
 	public void reloadPlayersData() {
-		pdatacfg = YamlConfiguration.loadConfiguration(playersdatafile);
-		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le ficher playersdata.yml a ete charger");
+		pdatacfg = YamlConfiguration.loadConfiguration(claimsfile);
+		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le ficher claims.yml a ete charger");
 	}
 
 }

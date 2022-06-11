@@ -1,22 +1,14 @@
-package fr.kangpvp.lastarria.utils;
+package fr.kangpvp.lastarria.grade;
 
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Chest;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
-import org.bukkit.persistence.PersistentDataContainer;
 
 import java.util.*;
 
@@ -69,6 +61,10 @@ public class Grade {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getNameWithoutColor() {
+        return name;
     }
 
     public List<String> getContent() {
