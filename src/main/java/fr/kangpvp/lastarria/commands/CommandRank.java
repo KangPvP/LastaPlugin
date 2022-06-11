@@ -2,8 +2,8 @@ package fr.kangpvp.lastarria.commands;
 
 import com.google.common.collect.Lists;
 
+import fr.kangpvp.lastarria.grade.Grade;
 import fr.kangpvp.lastarria.grade.Grades;
-import fr.kangpvp.lastarria.utils.Grade;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
