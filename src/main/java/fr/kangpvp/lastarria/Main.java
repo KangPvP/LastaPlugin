@@ -1,9 +1,6 @@
 package fr.kangpvp.lastarria;
 
-import fr.kangpvp.lastarria.commands.CommandBoutique;
-import fr.kangpvp.lastarria.commands.CommandClaim;
-import fr.kangpvp.lastarria.commands.CommandRank;
-import fr.kangpvp.lastarria.commands.CommandUnclaim;
+import fr.kangpvp.lastarria.commands.*;
 import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
@@ -27,8 +24,8 @@ public final class Main extends JavaPlugin {
 
         INSTANCE = this;
 
-        reloadConfig();
-        saveDefaultConfig();
+        //reloadConfig();
+        //saveDefaultConfig();
 
         //LoadConfigFile
         ConfigManager.getInstance().setup();

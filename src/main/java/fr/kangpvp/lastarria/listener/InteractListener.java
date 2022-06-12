@@ -17,12 +17,12 @@ public class InteractListener implements Listener {
             Chunk chunk = event.getClickedBlock().getChunk();
             String chunkID = chunk.getX() + "." + chunk.getZ();
 
-            if (Main.INSTANCE.isChunk(chunkID)) {
+           /* if (Main.INSTANCE.isChunk(chunkID)) {
                 if (!Main.INSTANCE.getOwner(chunkID).equals(player.getUniqueId()) && !player.isOp()) {
                     event.setCancelled(true);
                     player.sendMessage("§3Tu n'es pas autorisé à éditer ce chunk");
                 }
-            }
+            }*/
         }
     }
 }

@@ -8,22 +8,15 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Chest;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
-import org.bukkit.persistence.PersistentDataContainer;
 
 import java.util.*;
 
-public class Grade {
+public class Titre {
 
     private ItemStack item;
     private String name;
@@ -33,10 +26,10 @@ public class Grade {
     private int hours;
     private List<String> content;
     private String previousName;
-    private Grade previousGrade;
+    private Titre previousTitre;
 
 
-    public Grade(int slot, String name, String color, int hours, int price, Grade previousGrade, List<String> avantages) {
+    public Titre(int slot, String name, String color, int hours, int price, Titre previousTitre, List<String> avantages) {
 
         // Obtenir l'item du coffre (la tete)
         Location loc = new Location(Bukkit.getWorld("Aragnok"), 736, 144, 15);
@@ -48,15 +41,15 @@ public class Grade {
         // Définir toutes les variables
         this.nameWithoutColor = name;
         this.item = InvGradeData.getItem(slot);
-        this.previousGrade = previousGrade;
+        this.previousTitre = previousTitre;
         this.name = "§" + color + "§l" + name;
         this.price = price;
         this.hours = hours;
 
-        if(previousGrade == null){
+        if(previousTitre == null){
             this.previousName = "§8§lVagabond";
         } else {
-            this.previousName = previousGrade.getName();
+            this.previousName = previousTitre.getName();
         }
 
         // Créer la desc de l'item qui s'adapte aux variables
@@ -65,7 +58,7 @@ public class Grade {
                 "§c§nConditions",
                 "§7 • Titre: " + this.previousName,
                 "§7 • " + hours + " heures de jeu",
-                "§7 • prix" + price,
+                "§7 • prix: " + price,
                 "",
                 "§a§nAvantages"
         );
@@ -98,30 +91,22 @@ public class Grade {
     // pour obtenir l'item (pour le mettre dans l'inventaire de la boutique)
     public ItemStack getItem() {
 
-
         ItemMeta itemMeta = this.item.getItemMeta();
         itemMeta.setDisplayName(this.name);
         itemMeta.setLore(this.content);
         this.item.setItemMeta(itemMeta);
 
-        List<String> listTest = new ArrayList<String>();
-
         return this.item;
-
     }
 
-    public Grade getPreviousGrade() {
-        return this.previousGrade;
+    public Titre getPreviousGrade() {
+        return this.previousTitre;
     }
 
-    // fonction pour quand un item de la boutique de titres sera cliquée
+    //Quand item est cliqué
     public void performAction(Player player) {
 
-        // on get toutes les conditions
-
         int hoursPlayed = (int) PlayerUtils.getTimePlayed(player) / 20 / 3600;
-
-        //%vault_eco_balance%
 
         double money = Double.parseDouble((String) PlaceholderAPI.setPlaceholders(player, "%vault_eco_balance%"));
 
@@ -133,24 +118,26 @@ public class Grade {
             player.sendMessage("Vous avez déja ce grade");
             return;
         }
-        System.out.println("Test 762");
-        System.out.println(this.previousName.substring(4).toString());
-        if(luckGrade.contains(this.previousName.substring(4).toString())) {
-            player.sendMessage("C'est bien vous avez le grade Précédant celui ci");
-            System.out.println("Test 773");
-            // on test si le joueur a bien réuni les conditions
-            if(hoursPlayed >= this.hours && money >= this.price) {
-                System.out.println("Test 774");
-                // on add le grade + on send le message de réussite
-                Bukkit.broadcastMessage("luckperms user " + player.getName() + " parent add " + this.nameWithoutColor.toLowerCase());
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "luckperms user " + player.getName() + " parent add " + this.nameWithoutColor.toLowerCase());
-                Bukkit.broadcastMessage("&eSuper! " + player.getDisplayName() + " a débloqué le Titre de " + this.name + ".");
 
-            } else {
-                // on send le message d'erreur
-                player.sendMessage("&7Tu n'as pas les conditions nécéssaires pour acheter ce grade !");
-            }
+        if(!player.hasPermission("group." + this.previousName.substring(4).toLowerCase())){
+            player.sendMessage("§7Vous devez avoir d'abord avoir le titre " + this.previousName + " §7pour acheter le titre " + this.name);
+            return;
         }
+
+        if(hoursPlayed < this.hours){
+            player.sendMessage("§7Tu n'as pas assez d'heures de jeu pour débloquer le titre " + this.name);
+            return;
+        }
+
+        if(money < this.price) {
+            player.sendMessage("§7Tu n'as pas assez d'argent pour débloquer le titre " + this.name);
+            return;
+        }
+
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "luckperms user " + player.getName() + " parent add " + this.nameWithoutColor.toLowerCase());
+            PlayerUtils.takeMoney(player, this.price);
+            Bukkit.broadcastMessage("§7Bravo a " + player.getName() + " §7qui a débloqué le Titre " + this.name);
+
     }
 
 }
