@@ -41,8 +41,9 @@ public class ConfigManager {
 		}
 		
 		pdatacfg = YamlConfiguration.loadConfiguration(claimsfile);
-		
-		pdatacfg.set("tetesssss", "test"); //test ecriture
+
+		pdatacfg.createSection("claimed", ClaimManager.chunks);
+		//pdatacfg.set("tetesssss", "test");
 		
 	}
 
@@ -50,7 +51,7 @@ public class ConfigManager {
 		return pdatacfg;
 	}
 
-	public void savePlayersData() {
+	public void saveClaimsData() {
 		try {
 			pdatacfg.save(claimsfile);
 			Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le fichier claims.yml a ete sauvegarde");
@@ -61,7 +62,7 @@ public class ConfigManager {
 	}
 	
 
-	public void reloadPlayersData() {
+	public void reloadClaimsData() {
 		pdatacfg = YamlConfiguration.loadConfiguration(claimsfile);
 		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le ficher claims.yml a ete charger");
 	}

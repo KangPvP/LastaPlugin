@@ -11,24 +11,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import javax.swing.*;
-import java.sql.Timestamp;
 
 public class PlayerListener implements Listener {
 
-    /*private void changeGrade(Player player, Grade grade) {
-        if(grade.getPreviousGrade() == GradeManagment.getGrade(player)) {
-            GradeManagment.setGrade(player, grade);
-        } else {
-            player.sendMessage("&cVous ne pouvez pas acheter ce grade !");
-        }
-    }*/
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
-        InventoryView invtest = event.getView();
+        InventoryView invView = event.getView();
         int slot = event.getSlot();
         ItemStack item = event.getCurrentItem();
 

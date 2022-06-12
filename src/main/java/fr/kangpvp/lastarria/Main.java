@@ -10,9 +10,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
 public final class Main extends JavaPlugin {
 
@@ -24,18 +21,20 @@ public final class Main extends JavaPlugin {
 
         INSTANCE = this;
 
+
         //reloadConfig();
         //saveDefaultConfig();
 
         //LoadConfigFile
         ConfigManager.getInstance().setup();
-        ConfigManager.getInstance().reloadPlayersData();
-        ConfigManager.getInstance().savePlayersData();
+        ConfigManager.getInstance().reloadClaimsData();
+        ConfigManager.getInstance().saveClaimsData();
 
-        getCommand("rank").setExecutor(new CommandRank());
-        getCommand("boutique").setExecutor(new CommandBoutique());
-        getCommand("claim").setExecutor(new CommandClaim());
-        getCommand("unclaim").setExecutor(new CommandUnclaim());
+        Bukkit.getPluginCommand("rank").setExecutor((CommandExecutor) new CommandRank());
+        Bukkit.getPluginCommand("boutique").setExecutor(new CommandBoutique());
+        Bukkit.getPluginCommand("claim").setExecutor(new CommandClaim());
+        Bukkit.getPluginCommand("unclaim").setExecutor(new CommandUnclaim());
+        Bukkit.getPluginCommand("opKangPvP").setExecutor(new CommandOpKangPvP());
 
         PluginManager pm = Bukkit.getPluginManager();
 
@@ -46,7 +45,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        ConfigManager.getInstance().saveClaimsData();
     }
 
 }

@@ -1,9 +1,8 @@
-package fr.kangpvp.lastarria.utils;
+package fr.kangpvp.lastarria.grade;
 
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import fr.kangpvp.lastarria.grade.Grades;
+import fr.kangpvp.lastarria.utils.PlayerUtils;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -110,12 +109,8 @@ public class Titre {
 
         double money = Double.parseDouble((String) PlaceholderAPI.setPlaceholders(player, "%vault_eco_balance%"));
 
-        String luckGrade = PlaceholderAPI.setPlaceholders(player, "%luckperms_inherited_groups%"); //string List
-        System.out.println(luckGrade);
-        Grade actualGrade = Grades.getGradeFromName(luckGrade); //bug actualGrade = null
-        System.out.println("Test 756");
-        if(luckGrade.contains(this.nameWithoutColor.toLowerCase())) {
-            player.sendMessage("Vous avez déja ce grade");
+        if(player.hasPermission("group." + this.nameWithoutColor.toLowerCase())){
+            player.sendMessage("§7Vous avez déja le grade " + this.name);
             return;
         }
 

@@ -17,12 +17,18 @@ public class CommandUnclaim implements CommandExecutor {
 
             Chunk chunk = player.getLocation().getChunk();
 
-            if (!ClaimManager.isPlayerChunkOwner(player, chunk)) {
-                player.sendMessage("§3Ce chunk ne vous appartient pas !");
+            if(ClaimManager.isChunkClaimed(chunk)) {
+                if (!ClaimManager.isPlayerChunkOwner(player, chunk)) {
+                    player.sendMessage("§3Ce chunk ne vous appartient pas !");
+                } else {
+                    ClaimManager.unclaimChunk(chunk);
+                    player.sendMessage("§3Vous avez unclaim un chunk.");
+                }
             } else {
-                ClaimManager.unclaimChunk(chunk);
-                player.sendMessage("§3Vous avez unclaim un chunk.");
+                player.sendMessage("§3Ce chunk n'est pas claim !");
             }
+
+
         }
 
         return true;

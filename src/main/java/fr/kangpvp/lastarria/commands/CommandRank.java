@@ -56,17 +56,17 @@ public class CommandRank implements CommandExecutor {
                 Inventory inv = Bukkit.createInventory(null, 54, "§e§lTitres");
 
                 inv.setItem(11, Vilain);
-                inv.setItem(12, Grades.PAYSAN.getGrade().getItem());
-                inv.setItem(13, commercantGrade.getItem());
-                inv.setItem(14, artisanGrade.getItem());
-                inv.setItem(15, ecuyerGrade.getItem());
-                inv.setItem(21, vassalGrade.getItem());
-                inv.setItem(22, chevalierGrade.getItem());
-                inv.setItem(23, chatelainGrade.getItem());
-                inv.setItem(30, baronGrade.getItem());
-                inv.setItem(31, comteGrade.getItem());
-                inv.setItem(32, ducGrade.getItem());
-                inv.setItem(40, seigneurGrade.getItem());
+                inv.setItem(12, Titres.PAYSAN.getGrade().getItem());
+                inv.setItem(13, Titres.COMMERCANT.getGrade().getItem());
+                inv.setItem(14, Titres.ARTISAN.getGrade().getItem());
+                inv.setItem(15, Titres.ECUYER.getGrade().getItem());
+                inv.setItem(21, Titres.VASSAL.getGrade().getItem());
+                inv.setItem(22, Titres.CHEVALIER.getGrade().getItem());
+                inv.setItem(23, Titres.CHATELAIN.getGrade().getItem());
+                inv.setItem(30, Titres.BARON.getGrade().getItem());
+                inv.setItem(31, Titres.COMTE.getGrade().getItem());
+                inv.setItem(32, Titres.DUC.getGrade().getItem());
+                inv.setItem(40, Titres.SEIGNEUR.getGrade().getItem());
 
                 ItemStack blackWindows = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
                 ItemMeta blackWindow = blackWindows.getItemMeta();
@@ -95,9 +95,6 @@ public class CommandRank implements CommandExecutor {
                 inv.setItem(36, blackWindows);
                 inv.setItem(27, blackWindows);
                 inv.setItem(18, blackWindows);
-                inv.setItem(9, blackWindows);
-
-
 
                 player.openInventory(inv);
             } else {
