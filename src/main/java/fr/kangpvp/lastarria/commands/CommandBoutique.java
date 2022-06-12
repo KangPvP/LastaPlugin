@@ -4,10 +4,12 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -28,6 +30,26 @@ public class CommandBoutique implements CommandExecutor {
             myAwesomeSkull.setItemMeta(myAwesomeSkullMeta);
 
             Location loc = new Location(Bukkit.getWorld("Aragnok"), 736, 144, 15);
+
+            if(loc.getBlock().getType().equals(Material.CHEST)){
+                Chest ChestGrade = (Chest) loc.getBlock().getState();
+                Inventory InvGradeData = ChestGrade.getInventory();
+
+                ItemStack itemVip = InvGradeData.getItem(13);
+                ItemStack itemHeros = InvGradeData.getItem(14);
+                ItemStack itemLegende = InvGradeData.getItem(15);
+
+                Inventory invBoutique = Bukkit.createInventory(null, 54, "§eBoutique");
+                invBoutique.setItem(20, itemVip);
+                invBoutique.setItem(22, itemHeros);
+                invBoutique.setItem(24, itemLegende);
+
+                player.openInventory(invBoutique);
+
+            }
+
+
+
 
             String luckGrade = PlaceholderAPI.setPlaceholders(player, "%luckperms_inherited_groups%");
 
