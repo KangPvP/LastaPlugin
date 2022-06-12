@@ -47,5 +47,6 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         ConfigManager.getInstance().saveClaimsData();
     }
+    
 
 }

@@ -42,7 +42,7 @@ public class ConfigManager {
 		
 		pdatacfg = YamlConfiguration.loadConfiguration(claimsfile);
 
-		pdatacfg.createSection("claimed", ClaimManager.chunks);
+		//pdatacfg.createSection("", ClaimManager.chunks);
 		//pdatacfg.set("tetesssss", "test");
 		
 	}
