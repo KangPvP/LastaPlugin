@@ -57,7 +57,7 @@ public class Titre {
                 "§c§nConditions",
                 "§7 • Titre: " + this.previousName,
                 "§7 • " + hours + " heures de jeu",
-                "§7 • prix: " + price,
+                "§7 • Prix: " + price,
                 "",
                 "§a§nAvantages"
         );
