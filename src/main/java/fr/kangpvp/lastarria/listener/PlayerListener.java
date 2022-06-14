@@ -54,7 +54,26 @@ public class PlayerListener implements Listener {
                     }else {
                         Grade.sellGrade(player, "vip", 1000);
                     }
+                }else if(slot == 22){ //Item Heros
+                    if(player.hasPermission("group.vip")){
+                        Grade.sellGrade(player, "heros", 1000);
+                    }else if(player.hasPermission("group.heros")){
+                        player.sendMessage("Vous avez déja ce grade");
+                    }else if(player.hasPermission("group.legende")){
 
+                    }else {
+                        Grade.sellGrade(player, "heros", 2000);
+                    }
+                }else if(slot == 24){ //Item Légende
+                    if(player.hasPermission("group.vip")){
+                        Grade.sellGrade(player, "legende", 2500);
+                    }else if(player.hasPermission("group.heros")){
+                        Grade.sellGrade(player, "legende", 1500);
+                    }else if(player.hasPermission("group.legende")){
+                        player.sendMessage("Vous avez déja ce grade");
+                    }else {
+                        Grade.sellGrade(player, "legende", 3500);
+                    }
                 }
         }
 

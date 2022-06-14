@@ -95,9 +95,9 @@ public class Grade {
         Double money = PlayerUtils.getMoney(player);
 
         if(money >= prix){
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "luckperms user " + player.getName() + " parent add vip");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "luckperms user " + player.getName() + " parent add " + name);
             PlayerUtils.takeMoney(player, prix);
-            Bukkit.broadcastMessage("§7Bravo a " + player.getName() + " qui a achete le grade §eVIP");
+            Bukkit.broadcastMessage("§7Bravo a " + player.getName() + " qui a acheté le grade §e" + name.toUpperCase());
         }else{
             player.sendMessage("Vous n'avez pas assez d'argent");
         }
