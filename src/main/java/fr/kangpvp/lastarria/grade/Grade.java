@@ -1,6 +1,9 @@
 package fr.kangpvp.lastarria.grade;
 
+import fr.kangpvp.lastarria.utils.ConfigManager;
+import fr.kangpvp.lastarria.utils.PlayerUtils;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -8,7 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Grade {
 
@@ -88,4 +90,18 @@ public class Grade {
     public int getPrix() {
         return prix;
     }
+
+    public static void sellGrade(Player player, String name, int prix){
+        Double money = PlayerUtils.getMoney(player);
+
+        if(money >= prix){
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "luckperms user " + player.getName() + " parent add vip");
+            PlayerUtils.takeMoney(player, prix);
+            Bukkit.broadcastMessage("§7Bravo a " + player.getName() + " qui a achete le grade §eVIP");
+        }else{
+            player.sendMessage("Vous n'avez pas assez d'argent");
+        }
+
+    }
+
 }

@@ -1,7 +1,10 @@
 package fr.kangpvp.lastarria.listener;
 
+import fr.kangpvp.lastarria.grade.Grade;
 import fr.kangpvp.lastarria.titre.Titre;
 import fr.kangpvp.lastarria.titre.Titres;
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +36,7 @@ public class PlayerListener implements Listener {
 
             if(item.getType().equals(Material.PLAYER_HEAD)){
                 Titre titre = Titres.getGradeFromName(item.getItemMeta().getDisplayName());
-                if(titre.equals(null)){System.out.println(Color.RED + "BUG Titre == null : listener => PlayerListener => lignes 39");return;}
+                if(titre == null){System.out.println(Color.RED + "BUG Titre == null : listener => PlayerListener => lignes 39");return;}
                     titre.performAction(player);
 
             }
@@ -41,9 +44,19 @@ public class PlayerListener implements Listener {
         }else if (invView.getTitle().equals("§e§lBoutique")){
             event.setCancelled(true);
             if(item.getType().equals(Material.PLAYER_HEAD)){
+                if(slot == 20){ //Item VIP
+                    if(player.hasPermission("group.vip")){
+                        player.sendMessage("Vous avez déja ce grade");
+                    }else if(player.hasPermission("group.heros")){
 
-            }
+                    }else if(player.hasPermission("group.legende")){
+
+                    }else {
+                        Grade.sellGrade(player, "vip", 1000);
+                    }
+
+                }
         }
 
     }
-}
+}}

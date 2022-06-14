@@ -132,7 +132,6 @@ public class Titre {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "luckperms user " + player.getName() + " parent add " + this.nameWithoutColor.toLowerCase());
             PlayerUtils.takeMoney(player, this.price);
             Bukkit.broadcastMessage("§7Bravo a " + player.getName() + " §7qui a débloqué le Titre " + this.name);
-
     }
 
 }

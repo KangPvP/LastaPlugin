@@ -65,7 +65,7 @@ public class CommandBoutique implements CommandExecutor {
                 ItemStack itemLeftArrow = InvGradeData.getItem(23);
                 ItemStack itemTopArrow = InvGradeData.getItem(24);
 
-                Inventory invBoutique = Bukkit.createInventory(null, 54, "§eBoutique");
+                Inventory invBoutique = Bukkit.createInventory(null, 54, "§e§lBoutique");
                 invBoutique.setItem(20, gradeVip.getItem());
                 invBoutique.setItem(22, gradeHeros.getItem());
                 invBoutique.setItem(24, gradeLegende.getItem());

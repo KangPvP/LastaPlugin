@@ -27,8 +27,8 @@ public final class Main extends JavaPlugin {
 
         //LoadConfigFile
         ConfigManager.getInstance().setup();
-        ConfigManager.getInstance().reloadClaimsData();
-        ConfigManager.getInstance().saveClaimsData();
+        ConfigManager.getInstance().savePlayersData();
+        ConfigManager.getInstance().reloadPlayersData();
 
         Bukkit.getPluginCommand("rank").setExecutor((CommandExecutor) new CommandRank());
         Bukkit.getPluginCommand("boutique").setExecutor(new CommandBoutique());
@@ -45,7 +45,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        ConfigManager.getInstance().saveClaimsData();
+        ConfigManager.getInstance().savePlayersData();
     }
     
 
