@@ -1,4 +1,4 @@
-package fr.kangpvp.lastarria.grade;
+package fr.kangpvp.lastarria.titre;
 
 
 import com.google.common.collect.Lists;

@@ -1,7 +1,7 @@
 package fr.kangpvp.lastarria.listener;
 
-import fr.kangpvp.lastarria.grade.Titre;
-import fr.kangpvp.lastarria.grade.Titres;
+import fr.kangpvp.lastarria.titre.Titre;
+import fr.kangpvp.lastarria.titre.Titres;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +10,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.awt.*;
 
 
 public class PlayerListener implements Listener {
@@ -31,9 +33,16 @@ public class PlayerListener implements Listener {
 
             if(item.getType().equals(Material.PLAYER_HEAD)){
                 Titre titre = Titres.getGradeFromName(item.getItemMeta().getDisplayName());
-                titre.performAction(player);
+                if(titre.equals(null)){System.out.println(Color.RED + "BUG Titre == null : listener => PlayerListener => lignes 39");return;}
+                    titre.performAction(player);
+
             }
 
+        }else if (invView.getTitle().equals("§e§lBoutique")){
+            event.setCancelled(true);
+            if(item.getType().equals(Material.PLAYER_HEAD)){
+
+            }
         }
 
     }

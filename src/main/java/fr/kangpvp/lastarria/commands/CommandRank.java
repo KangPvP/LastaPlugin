@@ -1,6 +1,6 @@
 package fr.kangpvp.lastarria.commands;
 
-import fr.kangpvp.lastarria.grade.Titres;
+import fr.kangpvp.lastarria.titre.Titres;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

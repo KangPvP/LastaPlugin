@@ -1,5 +1,6 @@
 package fr.kangpvp.lastarria.commands;
 
+import fr.kangpvp.lastarria.grade.Grade;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,18 +25,8 @@ public class CommandBoutique implements CommandExecutor {
 
         if(sender instanceof Player){
             Player player = (Player) sender;
-            player.getLocation().getChunk();
-            ItemStack myAwesomeSkull = new ItemStack(Material.PLAYER_HEAD);
-            SkullMeta myAwesomeSkullMeta = (SkullMeta) myAwesomeSkull.getItemMeta();
-            UUID uuid = UUID.fromString("069741bd-360b-4a0c-b99f-acee9ea5d872");
-            myAwesomeSkullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
-            myAwesomeSkull.setItemMeta(myAwesomeSkullMeta);
 
             Location loc = new Location(Bukkit.getWorld("Aragnok"), 736, 144, 15);
-
-            String titre = PlaceholderAPI.setPlaceholders(player, "%luckperms_prefix%");
-            //getLa couleur du grade du player
-
 
             if(loc.getBlock().getType().equals(Material.CHEST)){
                 Chest ChestGrade = (Chest) loc.getBlock().getState();
@@ -45,71 +36,39 @@ public class CommandBoutique implements CommandExecutor {
                 ItemStack itemHeros = InvGradeData.getItem(14);
                 ItemStack itemLegende = InvGradeData.getItem(15);
 
-                ItemMeta itemMetaVip = itemVip.getItemMeta();
-                itemMetaVip.setDisplayName("§fGrade §7- §eVIP");
-                itemMetaVip.setLore(Arrays.asList(
-                        "§7 • Pseudo: §e" + player.getName(),
-                        "§7 • Accès au §ekit VIP §7toutes les semaines",
-                        "§7 • Customisations des armors-stands",
-                        "§7 • Commande: /ec",
-                        "§7 • Commande: /craft",
-                        "§7 • Commande: /feed",
-                        "§7 • Accès à 3 homes",
-                        "§7 • + 1 clé Légendaire",
-                        "",
-                        "§7Prix: §e1000 LC §7(LastaCoin)"
+                Grade gradeVip = new Grade(itemVip, "vip", "§e", 1000, player, null,3, Arrays.asList(
+                        "Accès au §ekit VIP §7toutes les semaines",
+                        "Customisations des armors-stands",
+                        "Commande: /ec",
+                        "Commande: /craft",
+                        "Commande: /feed",
+                        "Accès à 3 homes"));
 
-                        ));
-                itemVip.setItemMeta(itemMetaVip);
+                Grade gradeHeros = new Grade(itemHeros, "heros", "§6", 2000, player, gradeVip,3, Arrays.asList(
+                        "Accès au §6kit Heros §7toutes les semaines",
+                        "Tous les avantages du grade §eVIP",
+                        "Message color, emoji, color sign",
+                        "KeepXP 50%",
+                        "Commande: /back",
+                        "Commande: /furnace",
+                        "Commande: /repair"));
 
-                ItemMeta itemMetaHeros = itemHeros.getItemMeta();
-                itemMetaHeros.setDisplayName("§fGrade §7- §6Heros");
-                itemMetaHeros.setLore(Arrays.asList(
-                        "§7 • Pseudo: §6" + player.getName(),
-                        "§7 • Accès au §6kit Heros §7toutes les semaines",
-                        "§7 • Tous les avantages du grade §eVIP",
-                        "§7 • Message color, emoji, color sign",
-                        "§7 • KeepXP 50%",
-                        "§7 • Commande: /back",
-                        "§7 • Commande: /furnace",
-                        "§7 • Commande: /repair",
-                        "§7 • Accès à 7 homes",
-                        "§7 • + 1 clé Légendaire",
-                        "",
-                        "§7Prix: §e2000 LC §7(LastaCoin)"
-
-                ));
-                itemHeros.setItemMeta(itemMetaHeros);
-
-                ItemMeta itemMetaLegende = itemLegende.getItemMeta();
-                itemMetaLegende.setDisplayName("§fGrade §7- §cLegende");
-                itemMetaLegende.setLore(Arrays.asList(
-                        "§7 • Pseudo: §6" + player.getName(),
-                        "§7 • Accès au §6kit VIP §7toutes les semaines",
-                        "§7 • Tous les avantages du grade §6Heros",
-                        "§7 • KeepXP 100%",
-                        "§7 • Commande: /fly",
-                        "§7 • Commande: /anvil",
-                        "§7 • Commande: /?",
-                        "§7 • Accès à 12 homes",
-                        "§7 • + 1 clé Légendaire",
-                        "",
-                        "§7Prix: §e3500 LC §7(LastaCoin)"
-
-                ));
-                itemLegende.setItemMeta(itemMetaLegende);
-
-
-
+                Grade gradeLegende = new Grade(itemLegende, "legende", "§c", 3500, player, gradeHeros,12, Arrays.asList(
+                        "Accès au §ckit VIP §7toutes les semaines",
+                        "Tous les avantages du grade §6Heros",
+                        "KeepXP 100%",
+                        "Commande: /fly",
+                        "Commande: /anvil",
+                        "Commande: /?"));
 
 
                 ItemStack itemLeftArrow = InvGradeData.getItem(23);
                 ItemStack itemTopArrow = InvGradeData.getItem(24);
 
                 Inventory invBoutique = Bukkit.createInventory(null, 54, "§eBoutique");
-                invBoutique.setItem(20, itemVip);
-                invBoutique.setItem(22, itemHeros);
-                invBoutique.setItem(24, itemLegende);
+                invBoutique.setItem(20, gradeVip.getItem());
+                invBoutique.setItem(22, gradeHeros.getItem());
+                invBoutique.setItem(24, gradeLegende.getItem());
                 invBoutique.setItem(30, itemLeftArrow);
                 invBoutique.setItem(32, itemLeftArrow);
                 invBoutique.setItem(40, itemTopArrow);
