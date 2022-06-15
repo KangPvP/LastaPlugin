@@ -91,7 +91,7 @@ public class Grade {
         return prix;
     }
 
-    public static void sellGrade(Player player, String name, int prix){
+    public static void buyGrade(Player player, String name, int prix){
         Double money = PlayerUtils.getMoney(player);
 
         if(money >= prix){

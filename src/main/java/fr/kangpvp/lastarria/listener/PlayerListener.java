@@ -3,13 +3,13 @@ package fr.kangpvp.lastarria.listener;
 import fr.kangpvp.lastarria.grade.Grade;
 import fr.kangpvp.lastarria.titre.Titre;
 import fr.kangpvp.lastarria.titre.Titres;
-import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
+import fr.kangpvp.lastarria.utils.ConfigManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +18,22 @@ import java.awt.*;
 
 
 public class PlayerListener implements Listener {
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event){
+        Player player = event.getPlayer();
+
+        ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".register", true);
+        ConfigManager.getInstance().savePlayersData();
+        ConfigManager.getInstance().reloadPlayersData();
+
+        if(!player.hasPlayedBefore()) {
+            ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin", 0);
+            ConfigManager.getInstance().savePlayersData();
+            ConfigManager.getInstance().reloadPlayersData();
+        }
+
+    }
 
 
     @EventHandler
@@ -52,27 +68,27 @@ public class PlayerListener implements Listener {
                     }else if(player.hasPermission("group.legende")){
 
                     }else {
-                        Grade.sellGrade(player, "vip", 1000);
+                        Grade.buyGrade(player, "vip", 1000);
                     }
                 }else if(slot == 22){ //Item Heros
                     if(player.hasPermission("group.vip")){
-                        Grade.sellGrade(player, "heros", 1000);
+                        Grade.buyGrade(player, "heros", 1000);
                     }else if(player.hasPermission("group.heros")){
                         player.sendMessage("Vous avez déja ce grade");
                     }else if(player.hasPermission("group.legende")){
 
                     }else {
-                        Grade.sellGrade(player, "heros", 2000);
+                        Grade.buyGrade(player, "heros", 2000);
                     }
                 }else if(slot == 24){ //Item Légende
                     if(player.hasPermission("group.vip")){
-                        Grade.sellGrade(player, "legende", 2500);
+                        Grade.buyGrade(player, "legende", 2500);
                     }else if(player.hasPermission("group.heros")){
-                        Grade.sellGrade(player, "legende", 1500);
+                        Grade.buyGrade(player, "legende", 1500);
                     }else if(player.hasPermission("group.legende")){
                         player.sendMessage("Vous avez déja ce grade");
                     }else {
-                        Grade.sellGrade(player, "legende", 3500);
+                        Grade.buyGrade(player, "legende", 3500);
                     }
                 }
         }

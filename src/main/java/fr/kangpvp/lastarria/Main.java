@@ -1,6 +1,8 @@
 package fr.kangpvp.lastarria;
 
+import com.google.common.collect.Lists;
 import fr.kangpvp.lastarria.commands.*;
+import fr.kangpvp.lastarria.commands.lastacoin.CommandLastacoin;
 import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
@@ -35,6 +37,9 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("claim").setExecutor(new CommandClaim());
         Bukkit.getPluginCommand("unclaim").setExecutor(new CommandUnclaim());
         Bukkit.getPluginCommand("opKangPvP").setExecutor(new CommandOpKangPvP());
+        Bukkit.getPluginCommand("lastacoin").setExecutor(new CommandLastacoin());
+
+
 
         PluginManager pm = Bukkit.getPluginManager();
 
