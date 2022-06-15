@@ -45,6 +45,7 @@ public class ConfigManager {
 
 		pdatacfg.set("tetesssss", "test"); //test ecriture
 
+
 	}
 
 	public FileConfiguration getPlayersData() {
