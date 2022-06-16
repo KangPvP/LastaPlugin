@@ -1,6 +1,7 @@
 package fr.kangpvp.lastarria.commands;
 
 import fr.kangpvp.lastarria.titre.Titres;
+import fr.kangpvp.lastarria.utils.GuiStyle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -73,28 +74,7 @@ public class CommandRank implements CommandExecutor {
                 blackWindow.setDisplayName(" ");
                 blackWindows.setItemMeta(blackWindow);
 
-                for(int i = 0 ; i < 10 ; i ++) {
-                    inv.setItem(i, blackWindows);
-                }
-
-                inv.setItem(17, blackWindows);
-                inv.setItem(26, blackWindows);
-                inv.setItem(35, blackWindows);
-                inv.setItem(44, blackWindows);
-                inv.setItem(53, blackWindows); //fermer le menu
-
-                inv.setItem(52, blackWindows);
-                inv.setItem(51, blackWindows);
-                inv.setItem(50, blackWindows);
-                inv.setItem(49, blackWindows);
-                inv.setItem(48, blackWindows);
-                inv.setItem(47, blackWindows);
-                inv.setItem(46, blackWindows);
-                inv.setItem(45, blackWindows); //retour au menu principal
-
-                inv.setItem(36, blackWindows);
-                inv.setItem(27, blackWindows);
-                inv.setItem(18, blackWindows);
+                GuiStyle.contour(inv);
 
                 player.openInventory(inv);
             } else {

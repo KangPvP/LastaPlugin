@@ -48,6 +48,19 @@ public class PlayerListener implements Listener {
 
         if(item == null) return;
 
+        if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
+            event.setCancelled(true);
+            player.closeInventory();
+        }
+
+
+        if(item.getItemMeta().getDisplayName().equals("§6§lMenu - §fPrincipale")){
+            event.setCancelled(true);
+            player.closeInventory();
+            player.performCommand("gui open info");
+        }
+
+
         if(invView.getTitle().equals("§e§lTitres")) {
             event.setCancelled(true);
 

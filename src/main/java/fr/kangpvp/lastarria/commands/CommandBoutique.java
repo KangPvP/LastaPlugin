@@ -1,6 +1,7 @@
 package fr.kangpvp.lastarria.commands;
 
 import fr.kangpvp.lastarria.grade.Grade;
+import fr.kangpvp.lastarria.utils.GuiStyle;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -27,6 +28,9 @@ public class CommandBoutique implements CommandExecutor {
             Player player = (Player) sender;
 
             Location loc = new Location(Bukkit.getWorld("Aragnok"), 736, 144, 15);
+
+
+
 
             if(loc.getBlock().getType().equals(Material.CHEST)){
                 Chest ChestGrade = (Chest) loc.getBlock().getState();
@@ -69,9 +73,8 @@ public class CommandBoutique implements CommandExecutor {
                 invBoutique.setItem(20, gradeVip.getItem());
                 invBoutique.setItem(22, gradeHeros.getItem());
                 invBoutique.setItem(24, gradeLegende.getItem());
-                invBoutique.setItem(30, itemLeftArrow);
-                invBoutique.setItem(32, itemLeftArrow);
-                invBoutique.setItem(40, itemTopArrow);
+
+                GuiStyle.contour(invBoutique); //Black glass panel
 
 
                 player.openInventory(invBoutique);
