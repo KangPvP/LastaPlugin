@@ -2,6 +2,7 @@ package fr.kangpvp.lastarria.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import fr.kangpvp.lastarria.Main;
 import org.bukkit.Bukkit;
@@ -45,6 +46,9 @@ public class ConfigManager {
 
 		pdatacfg.set("tetesssss", "test"); //test ecriture
 
+		for(Map.Entry<String, String> value: ClaimManager.chunks.entrySet()) {
+			pdatacfg.set("claims." + value.getKey(), value.getValue());
+		}
 
 	}
 

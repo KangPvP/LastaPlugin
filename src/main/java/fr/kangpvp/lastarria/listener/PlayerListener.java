@@ -4,6 +4,7 @@ import fr.kangpvp.lastarria.grade.Grade;
 import fr.kangpvp.lastarria.titre.Titre;
 import fr.kangpvp.lastarria.titre.Titres;
 import fr.kangpvp.lastarria.utils.ConfigManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
