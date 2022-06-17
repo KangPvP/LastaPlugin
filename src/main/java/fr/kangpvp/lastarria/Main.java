@@ -1,6 +1,7 @@
 package fr.kangpvp.lastarria;
 
 import fr.kangpvp.lastarria.commands.*;
+import fr.kangpvp.lastarria.commands.CommandFly;
 import fr.kangpvp.lastarria.commands.lastacoin.CommandLastacoin;
 import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
@@ -37,6 +38,15 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("opKangPvP").setExecutor(new CommandOpKangPvP());
         Bukkit.getPluginCommand("lastacoin").setExecutor(new CommandLastacoin());
         Bukkit.getPluginCommand("lastaitem").setExecutor(new CommandLastaItem());
+        Bukkit.getPluginCommand("fly").setExecutor(new CommandFly());
+
+        // commande /ah qui fait la meme chose que la commande /ca
+        Bukkit.getPluginCommand("ah").setExecutor(
+                Bukkit.getServer().getPluginCommand("ca").getExecutor()
+        );
+        Bukkit.getPluginCommand("ah").setTabCompleter(
+                Bukkit.getServer().getPluginCommand("ca").getTabCompleter()
+        );
 
 
 
