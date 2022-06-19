@@ -1,21 +1,28 @@
 package fr.kangpvp.lastarria.listener;
 
+import fr.kangpvp.lastarria.Main;
 import fr.kangpvp.lastarria.grade.Grade;
 import fr.kangpvp.lastarria.titre.Titre;
 import fr.kangpvp.lastarria.titre.Titres;
 import fr.kangpvp.lastarria.utils.ConfigManager;
+import fr.kangpvp.lastarria.utils.GamePlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.awt.*;
+import java.util.UUID;
 
 
 public class PlayerListener implements Listener {
@@ -23,17 +30,99 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
 
-        ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".register", true);
-        ConfigManager.getInstance().savePlayersData();
-        ConfigManager.getInstance().reloadPlayersData();
+        new GamePlayer(player.getName());
 
         if(!player.hasPlayedBefore()) {
             ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin", 0);
+
+            String key = "Joueurs." + uuid + ".data.lastco";
+            ConfigManager.pdatacfg.set(key + ".world", "Aragnok");
+            ConfigManager.pdatacfg.set(key + ".x", 718.5);
+            ConfigManager.pdatacfg.set(key + ".y", 75);
+            ConfigManager.pdatacfg.set(key + ".z", 72.5);
+
+            ConfigManager.getInstance().savePlayersData();
+            ConfigManager.getInstance().reloadPlayersData();
+        } else {
+            String key = "Joueurs." + uuid + ".data.lastco";
+            String world = (String) ConfigManager.pdatacfg.get(key + ".world");
+            Double x = (Double) ConfigManager.pdatacfg.get(key + ".x");
+            Double y = (Double) ConfigManager.pdatacfg.get(key + ".y");
+            Double z = (Double) ConfigManager.pdatacfg.get(key + ".z");
+
+            player.teleport(new Location(Bukkit.getWorld(world), x, y, z));
+        }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event){
+        Player player = event.getPlayer();
+        UUID uuid = player.getUniqueId();
+
+        String world = player.getLocation().getWorld().getName();
+        Double x = player.getLocation().getX();
+        Double y = player.getLocation().getY();
+        Double z = player.getLocation().getZ();
+
+        String key = "Joueurs." + uuid + ".data.lastco";
+
+        ConfigManager.pdatacfg.set(key + ".world", world);
+        ConfigManager.pdatacfg.set(key + ".x", x);
+        ConfigManager.pdatacfg.set(key + ".y", y);
+        ConfigManager.pdatacfg.set(key + ".z", z);
+        ConfigManager.getInstance().savePlayersData();
+        ConfigManager.getInstance().reloadPlayersData();
+    }
+
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent event){
+        Player player = event.getPlayer();
+        Location from = event.getFrom();
+        UUID uuid = player.getUniqueId();
+
+        if(from.getWorld().getName().equals("world") || from.getWorld().getName().equals("world_nether") || from.getWorld().getName().equals("world_the_end")){
+            String key = "Joueurs." + uuid + ".data.worlds.survie";
+            ConfigManager.pdatacfg.set(key + ".world", from.getWorld().getName());
+            ConfigManager.pdatacfg.set(key + ".x", from.getX());
+            ConfigManager.pdatacfg.set(key + ".y", from.getY());
+            ConfigManager.pdatacfg.set(key + ".z", from.getZ());
             ConfigManager.getInstance().savePlayersData();
             ConfigManager.getInstance().reloadPlayersData();
         }
 
+    }
+
+    @EventHandler
+    public void OnMove(PlayerMoveEvent event){
+        Player player = event.getPlayer();
+        GamePlayer gp = GamePlayer.gamePlayers.get(player.getName());
+        if (Main.portailTp.isInZone(player.getLocation())) {
+            if (!gp.isInZone) {
+                gp.isInZone = true;
+                UUID uuid = player.getUniqueId();
+
+                if(ConfigManager.pdatacfg.get("Joueurs." + uuid + ".data.worlds.survie" + ".world").equals(null)){
+                    player.sendMessage("OK test");
+                }else{
+                    String key = "Joueurs." + uuid + ".data.worlds.survie";
+                    String world = (String) ConfigManager.pdatacfg.get(key + ".world");
+                    Double x = (Double) ConfigManager.pdatacfg.get(key + ".x");
+                    Double y = (Double) ConfigManager.pdatacfg.get(key + ".y");
+                    Double z = (Double) ConfigManager.pdatacfg.get(key + ".z");
+
+                    player.teleport(new Location(Bukkit.getWorld(world), x, y, z));
+                }
+
+                player.sendMessage("§bVous entrez en monde survie.");
+
+            }
+        } else {
+            if (gp.isInZone) {
+                gp.isInZone = false;
+            }
+        }
     }
 
 

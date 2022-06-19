@@ -6,7 +6,9 @@ import fr.kangpvp.lastarria.commands.lastacoin.CommandLastacoin;
 import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
+import fr.kangpvp.lastarria.utils.RegionManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,7 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class Main extends JavaPlugin {
 
     public static Main INSTANCE;
-
+    public static RegionManager portailTp;
 
     @Override
     public void onEnable() {
@@ -38,18 +40,10 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("opKangPvP").setExecutor(new CommandOpKangPvP());
         Bukkit.getPluginCommand("lastacoin").setExecutor(new CommandLastacoin());
         Bukkit.getPluginCommand("lastaitem").setExecutor(new CommandLastaItem());
+        Bukkit.getPluginCommand("rtp").setExecutor(new CommandRTP());
         Bukkit.getPluginCommand("fly").setExecutor(new CommandFly());
 
-        // commande /ah qui fait la meme chose que la commande /ca
-        Bukkit.getPluginCommand("ah").setExecutor(
-                Bukkit.getServer().getPluginCommand("ca").getExecutor()
-        );
-        Bukkit.getPluginCommand("ah").setTabCompleter(
-                Bukkit.getServer().getPluginCommand("ca").getTabCompleter()
-        );
-
-
-
+        portailTp = new RegionManager(new Location(Bukkit.getWorld("Aragnok"), 675, 69, 67.5), new Location(Bukkit.getWorld("Aragnok"), 676.5, 82, 77.5));
 
         PluginManager pm = Bukkit.getPluginManager();
 
