@@ -37,14 +37,11 @@ public class PlayerListener implements Listener {
         if(!player.hasPlayedBefore()) {
             ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin", 0);
 
-            String key = "Joueurs." + uuid + ".data.lastco";
-            ConfigManager.pdatacfg.set(key + ".world", "Aragnok");
-            ConfigManager.pdatacfg.set(key + ".x", 718.5);
-            ConfigManager.pdatacfg.set(key + ".y", 75);
-            ConfigManager.pdatacfg.set(key + ".z", 72.5);
-
+            String key = "Joueurs." + uuid + ".data.worlds.survie";
+            ConfigManager.pdatacfg.set(key + ".world", "first");
             ConfigManager.getInstance().savePlayersData();
             ConfigManager.getInstance().reloadPlayersData();
+
         } else {
             String key = "Joueurs." + uuid + ".data.lastco";
             String world = (String) ConfigManager.pdatacfg.get(key + ".world");
@@ -95,7 +92,7 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void OnMove(PlayerMoveEvent event){
+    public void onMove(PlayerMoveEvent event){
         Player player = event.getPlayer();
         GamePlayer gp = GamePlayer.gamePlayers.get(player.getName());
         if (Main.portailTp.isInZone(player.getLocation())) {
@@ -103,8 +100,8 @@ public class PlayerListener implements Listener {
                 gp.isInZone = true;
                 UUID uuid = player.getUniqueId();
 
-                if(ConfigManager.pdatacfg.get("Joueurs." + uuid + ".data.worlds.survie" + ".world").equals(null)){
-                    player.sendMessage("OK test");
+                if(ConfigManager.pdatacfg.get("Joueurs." + uuid + ".data.worlds.survie").equals("first")){
+                    player.performCommand("rtp");
                 }else{
                     String key = "Joueurs." + uuid + ".data.worlds.survie";
                     String world = (String) ConfigManager.pdatacfg.get(key + ".world");

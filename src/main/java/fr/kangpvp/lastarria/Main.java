@@ -13,11 +13,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+
 
 public final class Main extends JavaPlugin {
 
     public static Main INSTANCE;
     public static RegionManager portailTp;
+    public static HashMap<String, Long> cooldowns = new HashMap<>();
 
     @Override
     public void onEnable() {
