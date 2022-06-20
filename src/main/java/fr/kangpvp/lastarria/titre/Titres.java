@@ -27,7 +27,7 @@ public enum Titres {
     CHATELAIN(new Titre(7, "Chatelain", "9", 82, 6244, Titres.CHEVALIER.getGrade(), (List<String>) Arrays.asList(
             "9 items en vente", "5 homes", "/tpa: 30s de Cooldown") )),
 
-    BARON(new Titre(8, "Baron", "e", 82, 15708, Titres.CHATELAIN.getGrade(), (List<String>) Arrays.asList(
+    BARON(new Titre(8, "Baron", "e", 135, 15708, Titres.CHATELAIN.getGrade(), (List<String>) Arrays.asList(
             "10 items en vente", "ATM 2.5$/min") )),
 
     COMTE(new Titre(9, "Comte", "e", 216, 24948, Titres.BARON.getGrade(), (List<String>) Arrays.asList(
