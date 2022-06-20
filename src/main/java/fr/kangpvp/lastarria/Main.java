@@ -45,6 +45,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lastaitem").setExecutor(new CommandLastaItem());
         Bukkit.getPluginCommand("rtp").setExecutor(new CommandRTP());
         Bukkit.getPluginCommand("fly").setExecutor(new CommandFly());
+        Bukkit.getPluginCommand("menu").setExecutor(new CommandMenu());
+        Bukkit.getPluginCommand("metiers").setExecutor(new CommandMetiers());
 
         portailTp = new RegionManager(new Location(Bukkit.getWorld("Aragnok"), 675, 69, 67.5), new Location(Bukkit.getWorld("Aragnok"), 676.5, 82, 77.5));
 

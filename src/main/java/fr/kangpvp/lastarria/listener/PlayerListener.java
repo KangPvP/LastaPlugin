@@ -132,7 +132,9 @@ public class PlayerListener implements Listener {
         ItemStack item = event.getCurrentItem();
 
 
-        if(item == null) return;
+        if(item.equals(null)){
+            return;
+        }
 
         if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
             event.setCancelled(true);
