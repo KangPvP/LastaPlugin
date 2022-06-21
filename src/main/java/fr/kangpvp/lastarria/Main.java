@@ -45,6 +45,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lastaitem").setExecutor(new CommandLastaItem());
         Bukkit.getPluginCommand("rtp").setExecutor(new CommandRTP());
         Bukkit.getPluginCommand("fly").setExecutor(new CommandFly());
+
+        Bukkit.getPluginCommand("hdv").setExecutor(new CommandHdv());
         Bukkit.getPluginCommand("menu").setExecutor(new CommandMenu());
         Bukkit.getPluginCommand("metiers").setExecutor(new CommandMetiers());
 
