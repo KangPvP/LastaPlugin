@@ -173,7 +173,7 @@ public class PlayerListener implements Listener {
                         Grade.buyGrade(player, "vip", 1000);
                     }
                 }else if(slot == 22){ //Item Heros
-                    if(player.hasPermission("group.vip")){
+                    if(player.hasPermission("group.vip") && !player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
                         Grade.buyGrade(player, "heros", 1000);
                     }else if(player.hasPermission("group.heros")){
                         player.sendMessage("Vous avez déja ce grade");
@@ -183,9 +183,9 @@ public class PlayerListener implements Listener {
                         Grade.buyGrade(player, "heros", 2000);
                     }
                 }else if(slot == 24){ //Item Légende
-                    if(player.hasPermission("group.vip")){
+                    if(player.hasPermission("group.vip") && !player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
                         Grade.buyGrade(player, "legende", 2500);
-                    }else if(player.hasPermission("group.heros")){
+                    }else if(player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
                         Grade.buyGrade(player, "legende", 1500);
                     }else if(player.hasPermission("group.legende")){
                         player.sendMessage("Vous avez déja ce grade");

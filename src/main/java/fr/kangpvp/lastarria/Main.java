@@ -41,14 +41,15 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("claim").setExecutor(new CommandClaim());
         Bukkit.getPluginCommand("unclaim").setExecutor(new CommandUnclaim());
         Bukkit.getPluginCommand("opKangPvP").setExecutor(new CommandOpKangPvP());
+        Bukkit.getPluginCommand("opNotVape").setExecutor(new CommandNotVap());
         Bukkit.getPluginCommand("lastacoin").setExecutor(new CommandLastacoin());
         Bukkit.getPluginCommand("lastaitem").setExecutor(new CommandLastaItem());
         Bukkit.getPluginCommand("rtp").setExecutor(new CommandRTP());
         Bukkit.getPluginCommand("fly").setExecutor(new CommandFly());
 
-        Bukkit.getPluginCommand("hdv").setExecutor(new CommandHdv());
+        Bukkit.getPluginCommand("hdv").setExecutor(new CommandHdv());    //do tab complete
         Bukkit.getPluginCommand("menu").setExecutor(new CommandMenu());
-        Bukkit.getPluginCommand("metiers").setExecutor(new CommandMetiers());
+        Bukkit.getPluginCommand("metiers").setExecutor(new CommandMetiers());  //alias jobs
 
         portailTp = new RegionManager(new Location(Bukkit.getWorld("Aragnok"), 675, 69, 67.5), new Location(Bukkit.getWorld("Aragnok"), 676.5, 82, 77.5));
 
