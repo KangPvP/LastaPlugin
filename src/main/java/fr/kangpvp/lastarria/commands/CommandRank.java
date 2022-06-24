@@ -43,7 +43,7 @@ public class CommandRank implements CommandExecutor {
                 //Create ItemVilain
                 ItemStack Vilain = InvGradeData.getItem(0);
                 ItemMeta vilainMeta = Vilain.getItemMeta();
-                vilainMeta.setDisplayName("§8§lVilain");
+                vilainMeta.setDisplayName("§8§lVagabond");
                 vilainMeta.setLore(Arrays.asList(
                         "                                                        ",
                         "§eAccès de base",

@@ -9,7 +9,7 @@ public enum Titres {
     PAYSAN(new Titre(1, "Paysan", "2", 0, 370, null, (List<String>) Arrays.asList(
             "3 items en vente", "2 homes" ) )),
 
-    COMMERCANT(new Titre(2, "Commercant", "2", 0, 980, Titres.PAYSAN.getGrade(), (List<String>) Arrays.asList(
+    COMMERCANT(new Titre(2, "Commercant", "2", 3, 980, Titres.PAYSAN.getGrade(), (List<String>) Arrays.asList(
             "4 items en vente", "ATM 1$/min" ) )),
 
     ARTISAN(new Titre(3, "Artisan", "2", 7, 1684, Titres.COMMERCANT.getGrade(), (List<String>) Arrays.asList(

@@ -57,7 +57,7 @@ public class Titre {
                 "§c§nConditions",
                 "§7 • Titre: " + this.previousName,
                 "§7 • " + hours + " heures de jeu",
-                "§7 • Prix: " + price,
+                "§7 • Prix: " + price + "$",
                 "",
                 "§a§nAvantages"
         );
@@ -115,7 +115,7 @@ public class Titre {
         }
 
         if(!player.hasPermission("group." + this.previousName.substring(4).toLowerCase())){
-            player.sendMessage("§7Vous devez avoir d'abord avoir le titre " + this.previousName + " §7pour acheter le titre " + this.name);
+            player.sendMessage("§7Vous devez d'abord avoir le titre " + this.previousName + " §7pour acheter le titre " + this.name);
             return;
         }
 
