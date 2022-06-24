@@ -1,0 +1,3 @@
+# LastaPlugin
+
+Best Plugin
