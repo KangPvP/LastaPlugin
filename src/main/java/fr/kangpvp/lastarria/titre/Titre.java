@@ -53,24 +53,23 @@ public class Titre {
 
         // Créer la desc de l'item qui s'adapte aux variables
         this.content = Lists.newArrayList(
-                "",
-                "§c§nConditions",
-                "§7 • Titre: " + this.previousName,
-                "§7 • " + hours + " heures de jeu",
-                "§7 • Prix: " + price + "$",
-                "",
-                "§a§nAvantages"
+                "                    ",
+                "§a§lAvantages",
+                "§7 • Préfix : §8[" + this.name + "§8] §7Pseudo"
         );
 
-        // on y ajoute la liste des avantages
         avantages.forEach((avantage) -> {
             avantage = "§7 • " + avantage;
             this.content.add(avantage);
         });
 
-        this.content.add("");
-        this.content.add("§eClic gauche §fpour acheter le grade " + this.name);
+        this.content.add("§" + color + "§lConditions");
+        this.content.add("§7 • Posseder le §f§ltitre: " + this.previousName);
+        this.content.add("§7 • Temps de jeu Requis: §f"  + hours);
+        this.content.add("§7 • Prix: §f" + price + "$");
 
+        this.content.add("");
+        this.content.add("§" + color + "Clic gauche §7pour acheter ce Titre");
     }
 
     // fonctions pour get les noms, avec ou sans couleur
@@ -91,7 +90,7 @@ public class Titre {
     public ItemStack getItem() {
 
         ItemMeta itemMeta = this.item.getItemMeta();
-        itemMeta.setDisplayName(this.name);
+        itemMeta.setDisplayName("§fTitre - " + this.name);
         itemMeta.setLore(this.content);
         this.item.setItemMeta(itemMeta);
 

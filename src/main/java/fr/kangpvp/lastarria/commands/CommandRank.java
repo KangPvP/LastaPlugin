@@ -46,7 +46,7 @@ public class CommandRank implements CommandExecutor {
                 vilainMeta.setDisplayName("§8§lVagabond");
                 vilainMeta.setLore(Arrays.asList(
                         "                                                        ",
-                        "§eAccès de base",
+                        "§e§nAccès de base",
                         "§7 • 2 items en vente",
                         "§7 • ATM 0.5$/min",
                         "§7 • /tpa cooldown de 10min"));

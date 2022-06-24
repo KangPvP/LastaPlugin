@@ -14,7 +14,6 @@ public class CommandFly implements CommandExecutor {
 
 
                 if(sender instanceof Player) {
-                    System.out.println("test perm");
                     Player player = (Player) sender;
                     if(player.getAllowFlight()) {
                         player.sendMessage("§bVous pouvez maintenant voler.");

@@ -36,7 +36,7 @@ public final class Main extends JavaPlugin {
         ConfigManager.getInstance().savePlayersData();
         ConfigManager.getInstance().reloadPlayersData();
 
-        Bukkit.getPluginCommand("rank").setExecutor((CommandExecutor) new CommandRank());
+        Bukkit.getPluginCommand("titre").setExecutor((CommandExecutor) new CommandRank());
         Bukkit.getPluginCommand("boutique").setExecutor(new CommandBoutique());
         Bukkit.getPluginCommand("claim").setExecutor(new CommandClaim());
         Bukkit.getPluginCommand("unclaim").setExecutor(new CommandUnclaim());
