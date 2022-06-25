@@ -46,7 +46,7 @@ public class Titre {
         this.hours = hours;
 
         if(previousTitre == null){
-            this.previousName = "§fTitre - " + "§8§lVagabond";
+            this.previousName = "§8§lVagabond";
         } else {
             this.previousName = previousTitre.getName();
         }
