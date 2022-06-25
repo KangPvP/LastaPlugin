@@ -47,4 +47,43 @@ public class GuiStyle {
         inv.setItem(18, blackWindows);
     }
 
+    public static void smallContour(Inventory inv){
+
+        ItemStack blackWindows = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        ItemMeta blackWindow = blackWindows.getItemMeta();
+        blackWindow.setDisplayName(" ");
+        blackWindows.setItemMeta(blackWindow);
+
+        ItemStack menu = ServerUtils.getChestData(25);
+        ItemStack fermer = ServerUtils.getChestData(26);
+
+        inv.setItem(0, blackWindows);
+        inv.setItem(1, blackWindows);
+        inv.setItem(2, blackWindows);
+        inv.setItem(3, blackWindows);
+        inv.setItem(4, blackWindows);
+        inv.setItem(5, blackWindows);
+        inv.setItem(6, blackWindows);
+        inv.setItem(7, blackWindows);
+        inv.setItem(8, blackWindows);
+        inv.setItem(9, blackWindows);
+
+        inv.setItem(17, blackWindows);
+        inv.setItem(26, blackWindows);
+        inv.setItem(35, blackWindows);
+        inv.setItem(44, fermer); //fermer le menu
+
+        inv.setItem(43, blackWindows);
+        inv.setItem(42, blackWindows);
+        inv.setItem(41, blackWindows);
+        inv.setItem(40, blackWindows);
+        inv.setItem(39, blackWindows);
+        inv.setItem(38, blackWindows);
+        inv.setItem(37, blackWindows);
+        inv.setItem(36, menu); //retour au menu principal
+
+        inv.setItem(27, blackWindows);
+        inv.setItem(18, blackWindows);
+    }
+
 }

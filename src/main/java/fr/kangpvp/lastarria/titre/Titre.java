@@ -54,7 +54,7 @@ public class Titre {
         // Créer la desc de l'item qui s'adapte aux variables
         this.content = Lists.newArrayList(
                 "                    ",
-                "§a§lAvantages",
+                "§" + color + "§lAvantages",
                 "§7 • Préfix : §8[" + this.name + "§8] §7Pseudo"
         );
 
@@ -62,7 +62,7 @@ public class Titre {
             avantage = "§7 • " + avantage;
             this.content.add(avantage);
         });
-
+        this.content.add("     ");
         this.content.add("§" + color + "§lConditions");
         this.content.add("§7 • Posseder le §f§ltitre: " + this.previousName);
         this.content.add("§7 • Temps de jeu Requis: §f"  + hours);

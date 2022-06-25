@@ -16,7 +16,7 @@ public class CommandLastacoin implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
             if(args.length != 3){
-                System.out.println("/lastacoin [add/remove/set] <targe> <amount>");
+                System.out.println("/lastacoin [add/remove/set] <target> <amount>");
                 return true;
             }
 

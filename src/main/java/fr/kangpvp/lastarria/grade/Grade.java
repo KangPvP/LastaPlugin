@@ -92,14 +92,14 @@ public class Grade {
     }
 
     public static void buyGrade(Player player, String name, int prix){
-        Double money = PlayerUtils.getMoney(player);
+        Double money = PlayerUtils.getLastaCoin(player);
 
         if(money >= prix){
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "luckperms user " + player.getName() + " parent add " + name);
-            PlayerUtils.takeMoney(player, prix);
+            PlayerUtils.removeLastaCoin(player, prix);
             Bukkit.broadcastMessage("§7Bravo a " + player.getName() + " qui a acheté le grade §e" + name.toUpperCase());
         }else{
-            player.sendMessage("Vous n'avez pas assez d'argent");
+            player.sendMessage("Vous n'avez pas assez de LastaCoin.");
         }
 
     }

@@ -45,8 +45,7 @@ public class CommandBoutique implements CommandExecutor {
                         "Customisations des armors-stands",
                         "Commande: /ec",
                         "Commande: /craft",
-                        "Commande: /feed",
-                        "Accès à 3 homes"));
+                        "Commande: /feed"));
 
                 Grade gradeHeros = new Grade(itemHeros, "heros", "§6", 2000, player, gradeVip,3, Arrays.asList(
                         "Accès au §6kit Heros §7toutes les semaines",
@@ -69,12 +68,12 @@ public class CommandBoutique implements CommandExecutor {
                 ItemStack itemLeftArrow = InvGradeData.getItem(23);
                 ItemStack itemTopArrow = InvGradeData.getItem(24);
 
-                Inventory invBoutique = Bukkit.createInventory(null, 54, "§e§lBoutique");
+                Inventory invBoutique = Bukkit.createInventory(null, 45, "§e§lBoutique");
                 invBoutique.setItem(20, gradeVip.getItem());
                 invBoutique.setItem(22, gradeHeros.getItem());
                 invBoutique.setItem(24, gradeLegende.getItem());
 
-                GuiStyle.contour(invBoutique); //Black glass panel
+                GuiStyle.smallContour(invBoutique); //Black glass panel
 
 
                 player.openInventory(invBoutique);
