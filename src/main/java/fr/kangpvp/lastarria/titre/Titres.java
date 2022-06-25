@@ -59,7 +59,7 @@ public enum Titres {
 
         for(int i = 0 ; i < gradeArray.size() ; i ++) {
 
-            if(gradeArray.get(i).getGrade().getNameWithoutColor().toLowerCase().equals(name.toLowerCase().substring(4))) {
+            if(gradeArray.get(i).getGrade().getNameWithoutColor().toLowerCase().equals(name.toLowerCase().substring(14))) {
                 titreReturn = gradeArray.get(i).getGrade();
             }
         }

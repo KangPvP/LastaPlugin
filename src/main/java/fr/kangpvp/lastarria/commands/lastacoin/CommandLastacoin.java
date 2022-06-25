@@ -28,7 +28,6 @@ public class CommandLastacoin implements CommandExecutor, TabCompleter {
 
                 case "add":
                     PlayerUtils.addLastaCoin(target, amount);
-
                     break;
                 case "remove":
                     PlayerUtils.removeLastaCoin(target, amount);

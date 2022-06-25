@@ -154,7 +154,7 @@ public class PlayerListener implements Listener {
 
             if(item.getType().equals(Material.PLAYER_HEAD)){
                 Titre titre = Titres.getGradeFromName(item.getItemMeta().getDisplayName());
-                if(titre == null){System.out.println(Color.RED + "BUG Titre == null : listener => PlayerListener => lignes 39");return;}
+                if(titre == null){System.out.println("BUG Titre == null : listener => PlayerListener => lignes 39");return;}
                     titre.performAction(player);
 
             }
