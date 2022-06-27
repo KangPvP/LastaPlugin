@@ -54,13 +54,12 @@ public enum Titres {
     public static Titre getGradeFromName(String name) {
 
         Titre titreReturn = null;
-        List<Titres> gradeArray = Arrays.stream(Titres.class.getEnumConstants()).collect(Collectors.toList());
+        Titres[] gradeArray = Titres.values();
 
-
-        for(int i = 0 ; i < gradeArray.size() ; i ++) {
-            System.out.println(name.toLowerCase());
-            if(gradeArray.get(i).getGrade().getNameWithoutColor().toLowerCase().equals(name.toLowerCase().substring(14))) {
-                titreReturn = gradeArray.get(i).getGrade();
+        for(int i = 0 ; i < gradeArray.length ; i ++) {
+            System.out.println(name);
+            if(gradeArray[i].getGrade().getNameWithoutColor().toLowerCase().equals(name)) {
+                titreReturn = gradeArray[i].getGrade();
             }
         }
 
