@@ -133,4 +133,13 @@ public class Titre {
             Bukkit.broadcastMessage("§7Bravo a " + player.getName() + " §7qui a débloqué le Titre " + this.name);
     }
 
+
+    public int getHomes(){
+        if(this.homes == 0) {
+            return this.previousTitre.getHomes();
+        } else {
+            return this.previousTitre.getHomes();
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package fr.kangpvp.lastarria;
 
 import fr.kangpvp.lastarria.commands.*;
 import fr.kangpvp.lastarria.commands.CommandFly;
+import fr.kangpvp.lastarria.commands.home.CommandSethome;
 import fr.kangpvp.lastarria.commands.lastacoin.CommandLastacoin;
 import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
@@ -46,6 +47,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lastaitem").setExecutor(new CommandLastaItem());
         Bukkit.getPluginCommand("rtp").setExecutor(new CommandRTP());
         Bukkit.getPluginCommand("fly").setExecutor(new CommandFly());
+        Bukkit.getPluginCommand("setspawn").setExecutor(new CommandSethome());
 
         Bukkit.getPluginCommand("hdv").setExecutor(new CommandHdv());    //do tab complete
         Bukkit.getPluginCommand("menu").setExecutor(new CommandMenu());

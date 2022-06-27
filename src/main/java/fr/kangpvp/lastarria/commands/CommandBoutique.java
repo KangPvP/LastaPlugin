@@ -47,7 +47,7 @@ public class CommandBoutique implements CommandExecutor {
                         "Commande: /craft",
                         "Commande: /feed"));
 
-                Grade gradeHeros = new Grade(itemHeros, "heros", "§6", 2000, player, gradeVip,3, Arrays.asList(
+                Grade gradeHeros = new Grade(itemHeros, "heros", "§6", 2000, player, gradeVip,7, Arrays.asList(
                         "Accès au §6kit Heros §7toutes les semaines",
                         "Tous les avantages du grade §eVIP",
                         "Message color, emoji, color sign",
