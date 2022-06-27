@@ -153,7 +153,10 @@ public class PlayerListener implements Listener {
             event.setCancelled(true);
 
             if(item.getType().equals(Material.PLAYER_HEAD)){
-                Titre titre = Titres.getGradeFromName(item.getItemMeta().getDisplayName());
+
+                String name = item.getItemMeta().getDisplayName().toLowerCase().substring(14);
+
+                Titre titre = Titres.getGradeFromName(name);
                 if(titre == null){System.out.println("BUG Titre == null : listener => PlayerListener => lignes 39");return;}
                     titre.performAction(player);
 

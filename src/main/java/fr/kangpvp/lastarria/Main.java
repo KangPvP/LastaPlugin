@@ -47,7 +47,10 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lastaitem").setExecutor(new CommandLastaItem());
         Bukkit.getPluginCommand("rtp").setExecutor(new CommandRTP());
         Bukkit.getPluginCommand("fly").setExecutor(new CommandFly());
-        Bukkit.getPluginCommand("setspawn").setExecutor(new CommandSethome());
+        Bukkit.getPluginCommand("sethomesss").setExecutor(new CommandSethome());
+        Bukkit.getServer().getPluginCommand("sethome").setExecutor(new CommandSethome());
+        //Bukkit.getServer().getPluginCommand("sethome").setTabCompleter(new CommandSethome());
+
 
         Bukkit.getPluginCommand("hdv").setExecutor(new CommandHdv());    //do tab complete
         Bukkit.getPluginCommand("menu").setExecutor(new CommandMenu());

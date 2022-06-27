@@ -63,6 +63,7 @@ public enum Titres {
                 titreReturn = gradeArray.get(i).getGrade();
             }
         }
+
         return titreReturn;
 
     }
