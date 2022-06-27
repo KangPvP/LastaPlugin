@@ -49,7 +49,8 @@ public class CommandRank implements CommandExecutor {
                         "§e§nAccès de base",
                         "§7 • 2 items en vente",
                         "§7 • ATM 0.5$/min",
-                        "§7 • /tpa cooldown de 10min"));
+                        "§7 • /tpa cooldown de 10min",
+                        "§7 • Accès a 1 home"));
                 Vilain.setItemMeta(vilainMeta);
 
 

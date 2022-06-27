@@ -26,9 +26,14 @@ public class Titre {
     private List<String> content;
     private String previousName;
     private Titre previousTitre;
-
+    private int homes;
 
     public Titre(int slot, String name, String color, int hours, int price, Titre previousTitre, List<String> avantages) {
+        this(slot, name, color, hours, price, 0, previousTitre, avantages);
+    }
+    // nb 2 homes (20 au total)
+
+    public Titre(int slot, String name, String color, int hours, int price, int homes, Titre previousTitre, List<String> avantages) {
 
         // Obtenir l'item du coffre (la tete)
         Location loc = new Location(Bukkit.getWorld("Aragnok"), 736, 144, 15);
@@ -44,6 +49,7 @@ public class Titre {
         this.name = "§" + color + "§l" + name;
         this.price = price;
         this.hours = hours;
+        this.homes = homes;
 
         if(previousTitre == null){
             this.previousName = "§8§lVagabond";
@@ -62,6 +68,9 @@ public class Titre {
             avantage = "§7 • " + avantage;
             this.content.add(avantage);
         });
+        if(homes != 0) {
+            this.content.add("§7Accès à §f" + homes + " §7homes");
+        }
         this.content.add("     ");
         this.content.add("§" + color + "§lConditions");
         this.content.add("§7 • Posseder le §f§ltitre: " + this.previousName);
