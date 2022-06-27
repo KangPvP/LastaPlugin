@@ -145,9 +145,9 @@ public class Titre {
 
     public int getHomes(){
         if(this.homes == 0) {
-            return this.previousTitre.getHomes();
+            return this.previousTitre.homes;
         } else {
-            return this.previousTitre.getHomes();
+            return this.homes;
         }
     }
 

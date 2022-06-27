@@ -24,32 +24,24 @@ public class CommandSethome implements CommandExecutor {
           //  if(!player.getLocation().getWorld().equals("world_nether")) { return false; }
           //  if(!player.getLocation().getWorld().equals("world_the_end")){ return false; }
 
-            String titreName =  PlaceholderAPI.setPlaceholders(player, "%luckperms_first_group_on_tracks_titres%");
+            if(args.length != 1){
+                return false;
+            }
 
-            player.sendMessage(titreName + " || OK1");
-
-            Titre titre = Titres.getGradeFromName(titreName.toLowerCase());
-
-            player.sendMessage(titre + " || OK2");
-
-            int nbhomes = titre.getHomes();
+            int nbhomes = getMaxHome(player);
 
             player.sendMessage(nbhomes + " || OK2");
 
+            //if(nbhomeactuel < nbhomes)
+
             UUID uuid = player.getUniqueId();
 
-            String world = player.getLocation().getWorld().getName();
-            Double x = player.getLocation().getX();
-            Double y = player.getLocation().getY();
-            Double z = player.getLocation().getZ();
-
+           // ConfigManager.pdatacfg.get("Joueurs." + uuid + ".data.homes");
 
             String key = "Joueurs." + uuid + ".data.homes." + args[0];
 
-            ConfigManager.pdatacfg.set(key + ".world", world);
-            ConfigManager.pdatacfg.set(key + ".x", x);
-            ConfigManager.pdatacfg.set(key + ".y", y);
-            ConfigManager.pdatacfg.set(key + ".z", z);
+            ConfigManager.pdatacfg.set(key, player.getLocation());
+
             ConfigManager.getInstance().savePlayersData();
             ConfigManager.getInstance().reloadPlayersData();
 
@@ -61,4 +53,28 @@ public class CommandSethome implements CommandExecutor {
 
         return false;
     }
+
+    public int getMaxHome(Player player){
+        String titreName =  PlaceholderAPI.setPlaceholders(player, "%luckperms_first_group_on_tracks_titres%");
+        String gradeName = PlaceholderAPI.setPlaceholders(player, "%luckperms_first_group_on_tracks_grades%");   //if gradeName == null  =>  gradeName == ""
+
+        player.sendMessage(titreName + " ||" + gradeName + ".");
+
+        Titre titre = Titres.getGradeFromName(titreName.toLowerCase());
+
+        player.sendMessage(titre + " || OK2");
+
+        if(gradeName.equals("VIP")) {
+            return titre.getHomes() + 3;
+        }else if(gradeName.equals("Heros")){
+            return titre.getHomes() + 7;
+        }else if(gradeName.equals("Legende")){
+            return titre.getHomes() + 12;
+        }else {
+            return titre.getHomes();
+        }
+
+    }
+
+
 }

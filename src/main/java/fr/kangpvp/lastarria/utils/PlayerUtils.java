@@ -32,7 +32,7 @@ public class PlayerUtils {
 
 
     public static double getLastaCoin(Player player){
-        return (double) ConfigManager.pdatacfg.get("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin");
+        return ConfigManager.pdatacfg.getDouble("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin");
     }
 
     public static void addLastaCoin(Player player, double amount){

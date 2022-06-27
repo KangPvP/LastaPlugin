@@ -173,27 +173,27 @@ public class PlayerListener implements Listener {
                     }else if(player.hasPermission("group.legende")){
 
                     }else {
-                        Grade.buyGrade(player, "vip", 1000);
+                        Grade.buyGrade(player, "vip", 1000.00);
                     }
                 }else if(slot == 22){ //Item Heros
                     if(player.hasPermission("group.vip") && !player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
-                        Grade.buyGrade(player, "heros", 1000);
+                        Grade.buyGrade(player, "heros", 1000.00);
                     }else if(player.hasPermission("group.heros")){
                         player.sendMessage("Vous avez déja ce grade");
                     }else if(player.hasPermission("group.legende")){
 
                     }else {
-                        Grade.buyGrade(player, "heros", 2000);
+                        Grade.buyGrade(player, "heros", 2000.00);
                     }
                 }else if(slot == 24){ //Item Légende
                     if(player.hasPermission("group.vip") && !player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
-                        Grade.buyGrade(player, "legende", 2500);
+                        Grade.buyGrade(player, "legende", 2500.00);
                     }else if(player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
-                        Grade.buyGrade(player, "legende", 1500);
+                        Grade.buyGrade(player, "legende", 1500.00);
                     }else if(player.hasPermission("group.legende")){
                         player.sendMessage("Vous avez déja ce grade");
                     }else {
-                        Grade.buyGrade(player, "legende", 3500);
+                        Grade.buyGrade(player, "legende", 3500.00);
                     }
                 }
         }
