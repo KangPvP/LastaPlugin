@@ -14,7 +14,9 @@ public class CommandTuto implements CommandExecutor {
         if(sender instanceof Player){
             Player player = (Player) sender;
 
-            Location tutoloc = new Location(Bukkit.getWorld("spawn"), 400, 70,351, 36, 0);
+            Location tutoloc = new Location(Bukkit.getWorld("Aragnok"), 400, 70,351, 36, 0);
+
+            player.teleport(tutoloc);
         }
 
 

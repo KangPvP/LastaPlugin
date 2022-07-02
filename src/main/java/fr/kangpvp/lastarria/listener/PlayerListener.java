@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -20,6 +21,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.Permission;
 
 import java.awt.*;
 import java.util.UUID;
@@ -41,6 +43,8 @@ public class PlayerListener implements Listener {
             ConfigManager.pdatacfg.set(key + ".world", "first");
             ConfigManager.getInstance().savePlayersData();
             ConfigManager.getInstance().reloadPlayersData();
+
+            player.teleport(new Location(Bukkit.getWorld("Aragnok"), 400, 70,351, 36, 0));
 
         } else {
             String key = "Joueurs." + uuid + ".data.lastco";
@@ -71,6 +75,23 @@ public class PlayerListener implements Listener {
         ConfigManager.pdatacfg.set(key + ".z", z);
         ConfigManager.getInstance().savePlayersData();
         ConfigManager.getInstance().reloadPlayersData();
+    }
+
+
+    @EventHandler
+    public void onDead(PlayerDeathEvent event){
+        Player player = event.getEntity();
+        if(player.hasPermission("group.heros")){
+            int xp = player.getTotalExperience();
+            int xp50 = xp/2;
+            Bukkit.getScheduler().runTaskLater(Main.INSTANCE, () -> player.giveExp(xp50), 60);
+        }
+        if(player.hasPermission("group.legende")){
+            int xp = player.getTotalExperience();
+            Bukkit.getScheduler().runTaskLater(Main.INSTANCE, () -> player.giveExp(xp), 60);
+        }
+
+
     }
 
     @EventHandler
