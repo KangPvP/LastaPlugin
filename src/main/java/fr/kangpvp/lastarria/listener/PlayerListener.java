@@ -149,13 +149,16 @@ public class PlayerListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
         InventoryView invView = event.getView();
-        int slot = event.getSlot();
+
         ItemStack item = event.getCurrentItem();
 
 
-        if(item.equals(null)){
+        if(item == null){
             return;
         }
+
+        int slot = event.getSlot();
+
 
         if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
             event.setCancelled(true);
