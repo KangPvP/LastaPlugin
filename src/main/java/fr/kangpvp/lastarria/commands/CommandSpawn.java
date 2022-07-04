@@ -16,7 +16,7 @@ public class CommandSpawn implements CommandExecutor {
         if(sender instanceof Player){
             Player player = (Player) sender;
 
-            Location tutoloc = new Location(Bukkit.getWorld("Aragnok"), 400, 70,351, 36, 0);
+            Location tutoloc = new Location(Bukkit.getWorld("Aragnok"), 718.5, 74,72.5, -90, 0);
 
             player.teleport(tutoloc);
         }
