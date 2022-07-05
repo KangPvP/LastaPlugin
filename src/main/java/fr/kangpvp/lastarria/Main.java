@@ -55,6 +55,8 @@ public final class Main extends JavaPlugin {
 
         Bukkit.getPluginCommand("tuto").setExecutor(new CommandTuto());
         Bukkit.getPluginCommand("succes").setExecutor(new CommandSucces());
+
+        Bukkit.getPluginCommand("modif").setExecutor(new CommandModif());
         //Bukkit.getServer().getPluginCommand("sethome").setTabCompleter(new CommandSethome());
 
 

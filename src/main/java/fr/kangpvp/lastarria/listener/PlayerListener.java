@@ -14,16 +14,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.permissions.Permission;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.awt.*;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -143,6 +143,31 @@ public class PlayerListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event){
+        Player player = event.getPlayer();
+
+        if(event.getItem() == null){
+            return;
+        }
+        player.sendMessage("Hello 1");
+
+        ItemStack item = event.getItem();
+
+        if(item.getType().equals(Material.DIAMOND_AXE)){
+            player.sendMessage("Hello 2");
+            if(item.getItemMeta().getCustomModelData() == 1){
+                player.sendMessage("Hello 3");
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 40, 5, false, false ,false));
+                player.sendMessage("Hello 4");
+
+
+            }
+        }
+
+
+    }
+
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
@@ -150,31 +175,26 @@ public class PlayerListener implements Listener {
         Inventory inv = event.getClickedInventory();
         InventoryView invView = event.getView();
 
-        ItemStack item = event.getCurrentItem();
 
-
-        if(item == null){
+        if(event.getCurrentItem() == null){
             return;
         }
 
+        ItemStack item = event.getCurrentItem();
         int slot = event.getSlot();
-
-
-        if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
-            event.setCancelled(true);
-            player.closeInventory();
-        }
-
-
-        if(item.getItemMeta().getDisplayName().equals("§6§lMenu - §fPrincipale")){
-            event.setCancelled(true);
-            player.closeInventory();
-            player.performCommand("gui open info");
-        }
-
 
         if(invView.getTitle().equals("§e§lTitres")) {
             event.setCancelled(true);
+
+            if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
+                player.closeInventory();
+            }
+
+
+            if(item.getItemMeta().getDisplayName().equals("§6§lMenu - §fPrincipale")){
+                player.closeInventory();
+                player.performCommand("gui open info");
+            }
 
             if(item.getType().equals(Material.PLAYER_HEAD)){
 
@@ -188,6 +208,16 @@ public class PlayerListener implements Listener {
 
         }else if (invView.getTitle().equals("§e§lBoutique")){
             event.setCancelled(true);
+
+            if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
+                player.closeInventory();
+            }
+
+            if(item.getItemMeta().getDisplayName().equals("§6§lMenu - §fPrincipale")){
+                player.closeInventory();
+                player.performCommand("gui open info");
+            }
+
             if(item.getType().equals(Material.PLAYER_HEAD)){
                 if(slot == 20){ //Item VIP
                     if(player.hasPermission("group.vip")){

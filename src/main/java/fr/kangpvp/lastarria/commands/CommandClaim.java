@@ -3,10 +3,12 @@ package fr.kangpvp.lastarria.commands;
 import fr.kangpvp.lastarria.Main;
 import fr.kangpvp.lastarria.utils.ClaimManager;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class CommandClaim implements CommandExecutor {
 
@@ -23,6 +25,8 @@ public class CommandClaim implements CommandExecutor {
                 ClaimManager.claimChunk(chunk, player);
                 player.sendMessage("§3Vous avez claim un chunk.");
             }
+
+
         }
 
         return true;
