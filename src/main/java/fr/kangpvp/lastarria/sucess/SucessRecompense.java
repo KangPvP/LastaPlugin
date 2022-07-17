@@ -28,4 +28,8 @@ public class SucessRecompense {
 
     }
 
+    public void getRecompense() {
+
+    }
+
 }
