@@ -33,6 +33,7 @@ public class CommandModif implements CommandExecutor {
             AttributeModifier modifierss = new AttributeModifier(UUID.randomUUID(), "generic", 200.0, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.CHEST);
             ItemStack item = player.getInventory().getItemInMainHand();
             ItemMeta meta = item.getItemMeta();
+
             meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, modifier);
             meta.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, modifiers);
             meta.addAttributeModifier(Attribute.HORSE_JUMP_STRENGTH, modifierss);

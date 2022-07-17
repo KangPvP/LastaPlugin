@@ -41,8 +41,6 @@ public final class Main extends JavaPlugin {
 
         Bukkit.getPluginCommand("titre").setExecutor((CommandExecutor) new CommandRank());
         Bukkit.getPluginCommand("boutique").setExecutor(new CommandBoutique());
-        Bukkit.getPluginCommand("claim").setExecutor(new CommandClaim());
-        Bukkit.getPluginCommand("unclaim").setExecutor(new CommandUnclaim());
         Bukkit.getPluginCommand("opKangPvP").setExecutor(new CommandOpKangPvP());
         Bukkit.getPluginCommand("opNotVape").setExecutor(new CommandNotVap());
         Bukkit.getPluginCommand("lastacoin").setExecutor(new CommandLastacoin());

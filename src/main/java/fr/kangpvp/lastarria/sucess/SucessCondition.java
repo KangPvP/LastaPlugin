@@ -7,38 +7,35 @@ import javax.annotation.Nullable;
 
 public class SucessCondition {
 
-    private String name;
-    private int value;
-    private Statistic statistic;
-    private int amount;
-    private int modifier = 1;
-    private String description;
+    private Sucess sucess;
+    private int proges;
 
-    public SucessCondition(String name, int value, int amount, int modifier, String description) {
+    public SucessCondition(Sucess sucess, Player player, int proges) {
 
-        this.name = name;
-        this.value = value;
-        this.amount = amount;
-        this.modifier = modifier;
-        this.description = description;
+        this.sucess = sucess;
+        this.proges = proges;
 
-    }
+        String name = this.sucess.getName();
+        String color = this.sucess.getColor();
+        int maxValue = this.sucess.getMaxValue();
 
-    public boolean conditionValidated() {
-        return this.value >= this.amount;
-    }
+        if(proges >= maxValue){
+            if(player.hasPermission("lastarria." + name)){
+                player.sendMessage("Vous avez déja complèter ce succes");
+            } else {
+                player.sendMessage("Bravo vous venez de complèter le succes " + color + name);
+            }
+        }else{
 
-    public double getProgress() {
-        return this.value / this.modifier;
-    }
-
-    public String getDescription() {
-        String finalDescription = this.getProgress() + "/" + (this.amount / this.modifier) + this.description;
-        if(this.conditionValidated()) {
-            return "§2" + finalDescription;
-        } else {
-            return "§c" + finalDescription;
         }
+
+
+
+
+
+
+
+
     }
 
 }
