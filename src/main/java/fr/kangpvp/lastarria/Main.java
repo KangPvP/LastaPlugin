@@ -23,6 +23,7 @@ public final class Main extends JavaPlugin {
 
     public static Main INSTANCE;
     public static RegionManager portailTp;
+    public ArrayList<Player> flying = new ArrayList<>();
     public static HashMap<String, Long> cooldowns = new HashMap<>();
 
     @Override
@@ -48,8 +49,9 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("rtp").setExecutor(new CommandRTP());
         Bukkit.getPluginCommand("fly").setExecutor(new CommandFly());
         Bukkit.getPluginCommand("sethomesss").setExecutor(new CommandSethome());
-        Bukkit.getServer().getPluginCommand("sethome").setExecutor(new CommandSethome());
-        Bukkit.getServer().getPluginCommand("spawn").setExecutor(new CommandSpawn());
+        Bukkit.getPluginCommand("sethome").setExecutor(new CommandSethome());
+        Bukkit.getPluginCommand("spawn").setExecutor(new CommandSpawn());
+        Bukkit.getPluginCommand("close").setExecutor(new CommandClose());
 
         Bukkit.getPluginCommand("tuto").setExecutor(new CommandTuto());
         Bukkit.getPluginCommand("succes").setExecutor(new CommandSucces());
