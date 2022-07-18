@@ -26,14 +26,13 @@ public class Sucess {
     private ItemStack item;
     private String color;
     private String lore;
-    private int number;
+    private int value;
 
-    public Sucess(String name, int money, int key, int number,int maxValue, Material item, String color, String lore) {
+    public Sucess(String name, int money, int key, int maxValue, Material item, String color, String lore) {
 
         this.name = name;
         this.money = money;
         this.key = key;
-        this.number = number;
         this.maxValue = maxValue;
         this.item = new ItemStack(item);
         this.color = color;
@@ -76,8 +75,8 @@ public class Sucess {
 
         loreList.add("§7 - Récompense: " + recompense);
         loreList.add("");
-        if(this.hasMadeSucess(value, player)) {
-            loreList.add("§7Progrès: §eAccomplit");
+        if(player.hasPermission("lastarria.sucess." + this.name)) {
+            loreList.add("§7Progrès: §eAccomplit: &f" + this.value);
             meta.addEnchant(Enchantment.DIG_SPEED, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         } else {
@@ -85,7 +84,8 @@ public class Sucess {
         }
 
         loreList.add("");
-        loreList.add("§eClic-Gauche §fpour compléter le succès");
+        loreList.add("§eClic-Gauche §7pour compléter le succès");
+        meta.setLore(loreList);
 
 
         this.item.setItemMeta(meta);
@@ -93,9 +93,9 @@ public class Sucess {
 
     }
 
-    public void actionPerformed(int value, Player player) {
+    public void actionPerformed(Player player) {
 
-        if(this.hasMadeSucess(value, player)) {
+        if(this.value >= this.maxValue) {
 
             if(player.hasPermission("lastarria.sucess." + this.name)) {
 
@@ -128,8 +128,8 @@ public class Sucess {
         return color;
     }
 
-    public boolean hasMadeSucess(int value, Player player) {
-        return(value < this.maxValue || player.hasPermission("lastarria.sucess." + this.name));
+    public boolean hasMadeSucess(Player player) {
+        return(player.hasPermission("lastarria.sucess." + this.name));
     }
 
 
