@@ -9,7 +9,6 @@ public enum SucessList {
     MINAGE(new Sucess("Minage", 0, 1, 2000, Material.DIAMOND_PICKAXE, "8", "Casse 2000 blocs de stone"));
 
 
-    private Sucess sucess;
     SucessList(Sucess sucess) {
         this.sucess = sucess;
     }

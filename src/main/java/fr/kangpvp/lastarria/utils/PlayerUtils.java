@@ -2,7 +2,11 @@ package fr.kangpvp.lastarria.utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Statistic;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -86,8 +90,65 @@ public class PlayerUtils {
 
 
     //Les Succes
-    public static int getSuccesPeche(Player player){
+    public static int getSucessPeche(Player player){
         return player.getStatistic(Statistic.FISH_CAUGHT);
+    }
+
+    public static int getSucessMinage(Player player){
+        return player.getStatistic(Statistic.MINE_BLOCK, Material.STONE);
+    }
+
+    public static int getSucessChasse(Player player){
+        List<EntityType> monsters = Arrays.asList(EntityType.ZOMBIE, EntityType.SKELETON, EntityType.CREEPER, EntityType.SPIDER, EntityType.CAVE_SPIDER, EntityType.ENDERMAN, EntityType.BLAZE, EntityType.SLIME, EntityType.PILLAGER, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.MAGMA_CUBE, EntityType.ENDERMITE, EntityType.PHANTOM, EntityType.DROWNED, EntityType.WITCH, EntityType.HUSK, EntityType.GHAST, EntityType.GUARDIAN, EntityType.WITHER_SKELETON, EntityType.SHULKER);
+        int num = 0;
+
+        for(int i = 0 ; i < monsters.size() ; i++) {
+            num += player.getStatistic(Statistic.KILL_ENTITY, monsters.get(i));
+        }
+        return num;
+    }
+
+    public static int getSuccesSaut(Player player){
+        return player.getStatistic(Statistic.JUMP);
+    }
+
+    public static int getSuccesCraft(Player player){
+        return player.getStatistic(Statistic.CRAFT_ITEM);
+    }
+
+    public static int getSuccesSleep(Player player){
+        return player.getStatistic(Statistic.SLEEP_IN_BED);
+    }
+
+    public static int getSucessTrade(Player player){
+        return player.getStatistic(Statistic.TRADED_WITH_VILLAGER);
+    }
+
+    public static int getSucessTime(Player player){
+        return (player.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20 / 3600 / 24);
+    }
+
+    public static int getSuccesSeigneur(Player player){
+        if(player.hasPermission("group.seigneur")){
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public static int getSucessAllSucces(Player player){
+        SucessList[] sucess = SucessList.values();
+
+        boolean returning = false;
+
+        for(int i = 0 ; i < sucess.length ; i++) {
+            returning = sucess[i].getSucess().hasMadeSucess(player);
+        }
+
+        if(returning) {
+            return 1;
+        } else return 0;
+
     }
 
 

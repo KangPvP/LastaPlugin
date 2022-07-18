@@ -250,7 +250,16 @@ public class PlayerListener implements Listener {
                         Grade.buyGrade(player, "legende", 3500.00);
                     }
                 }
-        }
+            }
 
-    }
+        } else if(invView.getTitle().equals("§eSucces")) {
+
+            Sucess sucess = SucessList.getSucessFromName(item.getItemMeta().getDisplayName());
+            if(sucess != null) {
+                sucess.actionPerformed(player);
+            }
+
+            event.setCancelled(true);
+
+        }
 }}
