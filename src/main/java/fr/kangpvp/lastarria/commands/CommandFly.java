@@ -1,6 +1,9 @@
 package fr.kangpvp.lastarria.commands;
 
 import fr.kangpvp.lastarria.Main;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementDisplay;
+import org.bukkit.advancement.AdvancementDisplayType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -53,6 +53,32 @@ public class PlayerUtils {
         ConfigManager.getInstance().reloadPlayersData();
     }
 
+    public static void giveKey(Player player, int key, int amount) {
+        String clename = "";
+        switch (key) {
+            case 1:
+                clename = "clé_épique";
+                break;
+            case 2:
+                clename = "clé_légendaire";
+                break;
+            default:
+                clename = "clé_commune";
+                break;
+        }
+
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "excellentcrates:key give " + player.getName() + " " + clename + " " + amount);
+    }
+
+
+    //Les Succes
+    public static int getSuccesPeche(Player player){
+        return player.getStatistic(Statistic.FISH_CAUGHT);
+    }
+
+
+
+
 
 
 
