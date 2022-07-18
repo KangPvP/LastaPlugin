@@ -75,12 +75,17 @@ public class Sucess {
 
         loreList.add("§7 - Récompense: " + recompense);
         loreList.add("");
-        if(player.hasPermission("lastarria.sucess." + this.name)) {
-            loreList.add("§7Progrès: §eAccomplit: &f" + this.value);
+        if(this.hasMadeSucess(player)) {
+            loreList.add("§7Progrès: §eAccomplit: §f" + this.value);
             meta.addEnchant(Enchantment.DIG_SPEED, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         } else {
-            loreList.add("§7Progrès: &f" + this.value + "§8/" + this.maxValue);
+            meta.removeEnchant(Enchantment.DIG_SPEED);
+            loreList.add("§7Progrès: §f" + this.value + "§8/" + this.maxValue);
+
+            loreList.add("");
+            loreList.add("§eClic-Gauche §7pour compléter le succès");
+
         }
 
         loreList.add("");
