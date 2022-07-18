@@ -3,6 +3,7 @@ package fr.kangpvp.lastarria.sucess;
 import fr.kangpvp.lastarria.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -27,14 +28,14 @@ public class Sucess {
     private String lore;
     private int number;
 
-    public Sucess(String name, int money, int key, int maxValue, ItemStack item, String color, String lore) {
+    public Sucess(String name, int money, int key, int number,int maxValue, Material item, String color, String lore) {
 
         this.name = name;
         this.money = money;
         this.key = key;
         this.number = number;
         this.maxValue = maxValue;
-        this.item = item;
+        this.item = new ItemStack(item);
         this.color = color;
         this.lore = lore;
 
@@ -43,7 +44,7 @@ public class Sucess {
     public ItemStack getItem(int value, Player player) {
 
         ItemMeta meta = this.item.getItemMeta();
-        meta.setDisplayName("§fSuccès - " + this.color + this.name);
+        meta.setDisplayName("§fSuccès - §" + this.color + this.name);
         List<String> loreList = new ArrayList<>();
         loreList.add("");
         loreList.add("§f§lInformations");
