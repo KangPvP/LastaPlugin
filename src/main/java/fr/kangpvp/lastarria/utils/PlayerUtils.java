@@ -117,15 +117,15 @@ public class PlayerUtils {
         return num;
     }
 
-    public static int getSuccesSaut(Player player){
+    public static int getSucessSaut(Player player){
         return player.getStatistic(Statistic.JUMP);
     }
 
-    public static int getSuccesCraft(Player player){
+    public static int getSucessCraft(Player player){
         return player.getStatistic(Statistic.CRAFT_ITEM);
     }
 
-    public static int getSuccesSleep(Player player){
+    public static int getSucessSleep(Player player){
         return player.getStatistic(Statistic.SLEEP_IN_BED);
     }
 
@@ -137,7 +137,7 @@ public class PlayerUtils {
         return (player.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20 / 3600 / 24);
     }
 
-    public static int getSuccesSeigneur(Player player){
+    public static int getSucessSeigneur(Player player){
         if(player.hasPermission("group.seigneur")){
             return 1;
         } else {
@@ -148,16 +148,15 @@ public class PlayerUtils {
     public static int getSucessAllSucces(Player player){
         SucessList[] sucess = SucessList.values();
 
-        boolean returning = false;
+        int check = 0;
 
         for(int i = 0 ; i < sucess.length ; i++) {
-            returning = sucess[i].getSucess().hasMadeSucess(player);
+            if(sucess[i].getSucess().hasMadeSucess(player)){
+                check ++;
+            }
         }
 
-        if(returning) {
-            return 1;
-        } else return 0;
-
+        return check;
     }
 
 
