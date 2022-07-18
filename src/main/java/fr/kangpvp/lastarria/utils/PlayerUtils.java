@@ -4,6 +4,8 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerUtils {
@@ -67,7 +69,19 @@ public class PlayerUtils {
                 break;
         }
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "excellentcrates:key give " + player.getName() + " " + clename + " " + amount);
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "excellentcrates key give " + player.getName() + " " + clename + " " + amount);
+    }
+
+    public static boolean hasValideSlot(Player player){
+        Inventory inv = player.getInventory();
+        int check = 0;
+        for(ItemStack item : inv.getContents()){
+            if(item == null){
+                check++;
+            }
+        }
+
+        return check > 1;
     }
 
 
