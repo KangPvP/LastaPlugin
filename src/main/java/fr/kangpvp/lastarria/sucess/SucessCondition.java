@@ -8,18 +8,18 @@ import javax.annotation.Nullable;
 public class SucessCondition {
 
     private Sucess sucess;
-    private int proges;
+    private int progres;
 
-    public SucessCondition(Sucess sucess, Player player, int proges) {
+    public SucessCondition(Sucess sucess, Player player, int progres) {
 
         this.sucess = sucess;
-        this.proges = proges;
+        this.progres = progres;
 
         String name = this.sucess.getName();
         String color = this.sucess.getColor();
         int maxValue = this.sucess.getMaxValue();
 
-        if(proges >= maxValue){
+        if(progres >= maxValue){
             if(player.hasPermission("lastarria." + name)){
                 player.sendMessage("Vous avez déja complèter ce succes");
             } else {

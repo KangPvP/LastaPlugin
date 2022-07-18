@@ -1,5 +1,6 @@
 package fr.kangpvp.lastarria.sucess;
 
+import fr.kangpvp.lastarria.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Chest;
@@ -7,6 +8,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EnchantingInventory;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,19 +38,19 @@ public class Sucess {
 
     }
 
-    public ItemStack getItem() {
+    public ItemStack getItem(int value, Player player) {
 
         ItemMeta meta = this.item.getItemMeta();
         meta.setDisplayName("§fSuccès - " + this.color + this.name);
         List<String> loreList = new ArrayList<>();
         loreList.add("");
         loreList.add("§f§lInformations");
-        loreList.add("&7 - " + this.lore);
+        loreList.add("§7 - " + this.lore);
 
 
 
-        String recompense = "aucune";
-        if(this.key != 0 && this.money == 0) {
+        String recompense = "§fAucune";
+        if(this.money == 0) {
             switch (this.key) {
 
                 case 1:
@@ -62,7 +64,6 @@ public class Sucess {
                     break;
 
                 default:
-
                     break;
 
             }
@@ -70,15 +71,46 @@ public class Sucess {
             recompense = "§e" + this.money + "$";
         }
 
-
-
-
         loreList.add("§7 - Récompense: " + recompense);
+        loreList.add("");
+        if(this.hasMadeSucess(value, player)) {
+            loreList.add("§7Progrès: §eAccomplit");
+            meta.addEnchant(Enchantment.DIG_SPEED, 1, false);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        } else {
+            loreList.add("§7Progrès: " + value + "§8/" + this.maxValue);
+        }
 
+        loreList.add("");
+        loreList.add("§eClic-Gauche §fpour compléter le succès");
+
+
+        this.item.setItemMeta(meta);
+        return this.item;
 
     }
 
-    public void actionPerformed() {}
+    public void actionPerformed(int value, Player player) {
+
+        if(this.hasMadeSucess(value, player)) {
+
+            if(player.hasPermission("lastarria.sucess." + this.name)) {
+
+                player.sendMessage("Vous avez déjà accomplit ce succès.");
+
+            } else {
+
+                PlayerUtils.addMoney(player, this.money);
+
+                if(this.key != 0) {
+                    PlayerUtils.giveKey(player, this.key - 1, 1);
+                }
+
+            }
+        }
+
+
+    }
 
 
     public String getName() {
@@ -92,4 +124,10 @@ public class Sucess {
     public String getColor() {
         return color;
     }
+
+    public boolean hasMadeSucess(int value, Player player) {
+        return(value < this.maxValue || player.hasPermission("lastarria.sucess." + this.name));
+    }
+
+
 }
