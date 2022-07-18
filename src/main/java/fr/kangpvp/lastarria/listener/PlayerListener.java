@@ -2,6 +2,8 @@ package fr.kangpvp.lastarria.listener;
 
 import fr.kangpvp.lastarria.Main;
 import fr.kangpvp.lastarria.grade.Grade;
+import fr.kangpvp.lastarria.sucess.Sucess;
+import fr.kangpvp.lastarria.sucess.SucessList;
 import fr.kangpvp.lastarria.titre.Titre;
 import fr.kangpvp.lastarria.titre.Titres;
 import fr.kangpvp.lastarria.utils.ConfigManager;

@@ -1,5 +1,6 @@
 package fr.kangpvp.lastarria.utils;
 
+import fr.kangpvp.lastarria.sucess.SucessList;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -66,10 +67,10 @@ public class PlayerUtils {
     public static void giveKey(Player player, int key, int amount) {
         String clename = "";
         switch (key) {
-            case 1:
+            case 2:
                 clename = "clé_épique";
                 break;
-            case 2:
+            case 3:
                 clename = "clé_légendaire";
                 break;
             default:

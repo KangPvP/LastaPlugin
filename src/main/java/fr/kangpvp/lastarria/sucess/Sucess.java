@@ -40,7 +40,7 @@ public class Sucess {
 
     }
 
-    public ItemStack getItem(int value, Player player) {
+    public ItemStack getItem(Player player) {
 
         ItemMeta meta = this.item.getItemMeta();
         meta.setDisplayName("§fSuccès - §" + this.color + this.name);
@@ -80,7 +80,7 @@ public class Sucess {
             meta.addEnchant(Enchantment.DIG_SPEED, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         } else {
-            loreList.add("§7Progrès: " + value + "§8/" + this.maxValue);
+            loreList.add("§7Progrès: &f" + this.value + "§8/" + this.maxValue);
         }
 
         loreList.add("");
@@ -97,22 +97,29 @@ public class Sucess {
 
         if(this.value >= this.maxValue) {
 
-            if(player.hasPermission("lastarria.sucess." + this.name)) {
+            if(this.hasMadeSucess(player)) {
 
-                player.sendMessage("Vous avez déjà accomplit ce succès.");
+                player.sendMessage("Tu as déjà accomplit ce succès.");
 
             } else {
 
                 PlayerUtils.addMoney(player, this.money);
 
-                if(this.key != 0) {
-                    PlayerUtils.giveKey(player, this.key - 1, 1);
+                if(this.key > 0) {
+                    PlayerUtils.giveKey(player, this.key, 1);
                 }
+                player.sendMessage("§fFélécitation, tu as accomplit le succès §" + this.color + this.name + "§f. Les récompenses ont été récupérées.");
 
             }
         }
 
 
+    }
+
+    public Sucess setValue(int value) {
+        this.value = value;
+        System.out.println("-------------------------------: " + value);
+        return this;
     }
 
 
