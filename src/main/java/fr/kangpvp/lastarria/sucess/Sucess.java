@@ -1,14 +1,9 @@
 package fr.kangpvp.lastarria.sucess;
 
 import fr.kangpvp.lastarria.utils.PlayerUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EnchantingInventory;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -88,8 +83,6 @@ public class Sucess {
 
         }
 
-        loreList.add("");
-        loreList.add("§eClic-Gauche §7pour compléter le succès");
         meta.setLore(loreList);
 
 
@@ -113,6 +106,7 @@ public class Sucess {
                 if(this.key > 0) {
                     PlayerUtils.giveKey(player, this.key, 1);
                 }
+                PlayerUtils.addPermission(player, "lastarria.sucess." + this.name);
                 player.sendMessage("§fFélécitation, tu as accomplit le succès §" + this.color + this.name + "§f. Les récompenses ont été récupérées.");
 
             }

@@ -93,6 +93,10 @@ public class PlayerUtils {
         return check > 1;
     }
 
+    public static void addPermission(Player player, String permission) {
+        // /lp user Shadowhunter130 permission set lastarria.sucess.pêche
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set " + permission.toLowerCase());
+    }
 
     //Les Succes
     public static int getSucessPeche(Player player){

@@ -25,8 +25,8 @@ public enum SucessList {
         SucessList[] sucessList = SucessList.values();
 
         for(int i = 0 ; i < sucessList.length ; i ++) {
-            System.out.println(name);
-            if(sucessList[i].getSucess().getName().toLowerCase().substring(11).equals(name.toLowerCase())) {
+            System.out.println(name.substring(13));
+            if(sucessList[i].getSucess().getName().toLowerCase().equals(name.toLowerCase().substring(13))) {
                 sucessReturn = sucessList[i].getSucess();
             }
         }

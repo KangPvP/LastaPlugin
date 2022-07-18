@@ -261,9 +261,14 @@ public class PlayerListener implements Listener {
             Sucess sucess = SucessList.getSucessFromName(item.getItemMeta().getDisplayName());
             if(sucess != null) {
                 sucess.actionPerformed(player);
+                Bukkit.getScheduler().runTaskLater (Main.INSTANCE, () -> {
+                    player.closeInventory();
+                    player.performCommand("succes");
+                } , 8);
             }
-
             event.setCancelled(true);
+
+
 
         }
 }}
