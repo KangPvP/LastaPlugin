@@ -25,12 +25,14 @@ public class Sucess {
     private ItemStack item;
     private String color;
     private String lore;
+    private int number;
 
     public Sucess(String name, int money, int key, int maxValue, ItemStack item, String color, String lore) {
 
         this.name = name;
         this.money = money;
         this.key = key;
+        this.number = number;
         this.maxValue = maxValue;
         this.item = item;
         this.color = color;
