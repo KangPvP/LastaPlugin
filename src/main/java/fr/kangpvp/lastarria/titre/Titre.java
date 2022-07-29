@@ -145,7 +145,11 @@ public class Titre {
 
     public int getHomes(){
         if(this.homes == 0) {
-            return this.previousTitre.homes;
+            if(previousTitre == null){
+                return 2;
+            }else{
+                return this.previousTitre.homes;
+            }
         } else {
             return this.homes;
         }

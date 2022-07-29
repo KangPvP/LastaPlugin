@@ -154,7 +154,6 @@ public class PlayerListener implements Listener {
         if(event.getItem() == null){
             return;
         }
-        player.sendMessage("Hello 1");
 
         ItemStack item = event.getItem();
 
