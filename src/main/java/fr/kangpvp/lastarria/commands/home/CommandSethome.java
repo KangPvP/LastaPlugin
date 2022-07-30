@@ -62,19 +62,23 @@ public class CommandSethome implements CommandExecutor {
 
         Titre titre = Titres.getGradeFromName(titreName.toLowerCase());
 
-        player.sendMessage(titre + " || OK2");
 
-        if(gradeName.equals("VIP")) {
-            return titre.getHomes() + 3;
-        }else if(gradeName.equals("Heros")){
-            return titre.getHomes() + 7;
-        }else if(gradeName.equals("Legende")){
-            return titre.getHomes() + 12;
+        player.sendMessage(titre + " || OK2");
+        int homenb;
+        if(titre == null) {
+            homenb = 2;
         }else {
-            return titre.getHomes();
+            homenb = titre.getHomes();
         }
 
+        if(gradeName.equals("VIP")) {
+            return homenb + 3;
+        }else if(gradeName.equals("Heros")){
+            return homenb + 7;
+        }else if(gradeName.equals("Legende")){
+            return homenb + 12;
+        }else {
+            return homenb;
+        }
     }
-
-
 }

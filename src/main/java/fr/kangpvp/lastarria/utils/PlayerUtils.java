@@ -117,6 +117,18 @@ public class PlayerUtils {
         return num;
     }
 
+    public static int getSucessElvage(Player player){
+        List<EntityType> animals = Arrays.asList(EntityType.COW, EntityType.PIG, EntityType.CHICKEN, EntityType.SHEEP, EntityType.HORSE);
+        int num = 0;
+
+        for(int i = 0 ; i < animals.size() ; i++) {
+            num += player.getStatistic(Statistic.KILL_ENTITY, animals.get(i));
+        }
+        return num;
+    }
+
+
+
     public static int getSucessSaut(Player player){
         return player.getStatistic(Statistic.JUMP);
     }

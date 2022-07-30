@@ -22,7 +22,14 @@ public class CommandSucces implements CommandExecutor {
 
             GuiStyle.contour(inv);
 
-            inv.setItem(22,SucessList.PECHE.getSucess().setValue(PlayerUtils.getSucessPeche(player)).getItem(player));
+            inv.setItem(20,SucessList.PECHE.getSucess().setValue(PlayerUtils.getSucessPeche(player)).getItem(player));
+            inv.setItem(21,SucessList.MINAGE.getSucess().setValue(PlayerUtils.getSucessMinage(player)).getItem(player));
+            inv.setItem(22,SucessList.CHASSE.getSucess().setValue(PlayerUtils.getSucessChasse(player)).getItem(player));
+            inv.setItem(23,SucessList.ELVAGE.getSucess().setValue(PlayerUtils.getSucessElvage(player)).getItem(player));
+            inv.setItem(24,SucessList.JUMP.getSucess().setValue(PlayerUtils.getSucessSaut(player)).getItem(player));
+            inv.setItem(29,SucessList.TRADE.getSucess().setValue(PlayerUtils.getSucessTrade(player)).getItem(player));
+            inv.setItem(30,SucessList.TIME.getSucess().setValue(PlayerUtils.getSucessTime(player)).getItem(player));
+            inv.setItem(31,SucessList.SEIGNEUR.getSucess().setValue(PlayerUtils.getSucessSeigneur(player)).getItem(player));
 
 
             player.openInventory(inv);
