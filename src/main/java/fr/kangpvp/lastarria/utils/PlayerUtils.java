@@ -97,6 +97,10 @@ public class PlayerUtils {
         // /lp user Shadowhunter130 permission set lastarria.sucess.pêche
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set " + permission.toLowerCase());
     }
+    public static void removePermission(Player player, String permission) {
+        // /lp user Shadowhunter130 permission set lastarria.sucess.pêche
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission unset " + permission.toLowerCase());
+    }
 
     //Les Succes
     public static int getSucessPeche(Player player){

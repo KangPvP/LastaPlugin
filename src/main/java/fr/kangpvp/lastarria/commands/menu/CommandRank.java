@@ -1,4 +1,4 @@
-package fr.kangpvp.lastarria.commands;
+package fr.kangpvp.lastarria.commands.menu;
 
 import fr.kangpvp.lastarria.titre.Titres;
 import fr.kangpvp.lastarria.utils.GuiStyle;

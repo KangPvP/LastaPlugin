@@ -12,9 +12,12 @@ import fr.kangpvp.lastarria.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
@@ -270,4 +273,22 @@ public class PlayerListener implements Listener {
 
 
         }
-}}
+}
+
+    @EventHandler
+    public void onDamage(EntityDamageByEntityEvent event){
+        Entity victime = event.getEntity();
+        Entity killer = event.getDamager();
+
+        if(victime instanceof Player && killer instanceof Player){
+            if(victime.hasPermission("lastarria.player.pvp") && killer.hasPermission("lastarria.player.pvp")){
+
+            } else {
+                killer.sendMessage("Votre PvP ou le PvP de votre adversaire est désactivé");
+                event.setCancelled(true);
+            }
+        }
+
+
+    }
+}

@@ -7,6 +7,10 @@ description: Serveur Survie
 commands:
   boutique:
 
+  shopkey:
+
+  shopgrade:
+
   titre:
 
   opkangpvp:
@@ -16,6 +20,8 @@ commands:
   lastacoin:
 
   lastaitem:
+
+  pvp:
 
   rtp:
 

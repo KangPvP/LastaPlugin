@@ -4,6 +4,9 @@ import fr.kangpvp.lastarria.commands.*;
 import fr.kangpvp.lastarria.commands.CommandFly;
 import fr.kangpvp.lastarria.commands.home.CommandSethome;
 import fr.kangpvp.lastarria.commands.lastacoin.CommandLastacoin;
+import fr.kangpvp.lastarria.commands.menu.*;
+import fr.kangpvp.lastarria.commands.menu.boutique.CommandShopgrade;
+import fr.kangpvp.lastarria.commands.menu.boutique.CommandShopkey;
 import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
@@ -42,6 +45,9 @@ public final class Main extends JavaPlugin {
 
         Bukkit.getPluginCommand("titre").setExecutor((CommandExecutor) new CommandRank());
         Bukkit.getPluginCommand("boutique").setExecutor(new CommandBoutique());
+        Bukkit.getPluginCommand("shopgrade").setExecutor(new CommandShopgrade());
+        Bukkit.getPluginCommand("shopkey").setExecutor(new CommandShopkey());
+
         Bukkit.getPluginCommand("opKangPvP").setExecutor(new CommandOpKangPvP());
         Bukkit.getPluginCommand("opNotVape").setExecutor(new CommandNotVap());
         Bukkit.getPluginCommand("lastacoin").setExecutor(new CommandLastacoin());
@@ -52,6 +58,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("sethome").setExecutor(new CommandSethome());
         Bukkit.getPluginCommand("spawn").setExecutor(new CommandSpawn());
         Bukkit.getPluginCommand("close").setExecutor(new CommandClose());
+        Bukkit.getPluginCommand("pvp").setExecutor(new CommandPvp());
 
         Bukkit.getPluginCommand("tuto").setExecutor(new CommandTuto());
         Bukkit.getPluginCommand("succes").setExecutor(new CommandSucces());

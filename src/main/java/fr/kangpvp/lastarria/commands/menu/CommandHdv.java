@@ -1,4 +1,4 @@
-package fr.kangpvp.lastarria.commands;
+package fr.kangpvp.lastarria.commands.menu;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

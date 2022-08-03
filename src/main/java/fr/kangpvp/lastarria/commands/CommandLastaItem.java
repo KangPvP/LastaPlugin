@@ -32,7 +32,6 @@ public class CommandLastaItem implements CommandExecutor, TabCompleter {
 
         if(element.equals("give")) {
 
-
             if(args.length != 4) {
                 player.sendMessage("Utilisation: /lastaitems give <nom de l'item> <quantité> <nom du joueur>");
                 return true;

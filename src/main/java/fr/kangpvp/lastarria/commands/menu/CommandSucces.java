@@ -1,4 +1,4 @@
-package fr.kangpvp.lastarria.commands;
+package fr.kangpvp.lastarria.commands.menu;
 
 import fr.kangpvp.lastarria.sucess.Sucess;
 import fr.kangpvp.lastarria.sucess.SucessList;

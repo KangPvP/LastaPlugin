@@ -1,4 +1,4 @@
-package fr.kangpvp.lastarria.commands;
+package fr.kangpvp.lastarria.commands.menu.boutique;
 
 import fr.kangpvp.lastarria.grade.Grade;
 import fr.kangpvp.lastarria.utils.GuiStyle;
@@ -19,7 +19,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class CommandBoutique implements CommandExecutor {
+public class CommandShopgrade implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, java.lang.String label, java.lang.String[] args) {
