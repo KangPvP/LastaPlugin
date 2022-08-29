@@ -44,9 +44,11 @@ public class PlayerListener implements Listener {
 
 
         try{
-            Connection connection = playerConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, name FROM player WHERE uuid = ?");
 
+            Connection connection = playerConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, name, lastacoin FROM player WHERE uuid = ?");
+
+            System.out.println("Test PreparedStatement");
             preparedStatement.setString(1, uuid.toString());
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -88,22 +90,37 @@ public class PlayerListener implements Listener {
     }
 
     private void createUserGrade(Connection connection, Player player){
+
+        try{
+            Statement stmt = connection.createStatement();
+            String sql = "SELECT id FROM player ORDER BY id DESC LIMIT 1";
+            ResultSet rs = stmt.executeQuery(sql);
+            int id = rs.getInt(1);
+
+            System.out.println(id + " : TEST");
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO player VALUES ?, ?, ?, ?, ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO player (id, uuid, name, lastacoin, join_at, update_at) VALUES (?, ?, ?, ?, ?, ?)");
             long time = System.currentTimeMillis();
 
-            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(1, 2);
             preparedStatement.setString(2, player.getUniqueId().toString());
             preparedStatement.setString(3, player.getName());
             preparedStatement.setInt(4, 0);
             preparedStatement.setTimestamp(5, new Timestamp(time));
             preparedStatement.setTimestamp(6, new Timestamp(time));
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
 
 
 
