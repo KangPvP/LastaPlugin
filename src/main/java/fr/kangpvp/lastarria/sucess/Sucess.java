@@ -47,9 +47,9 @@ public class Sucess {
 
 
         String recompense = "§fAucune";
+
         if(this.money == 0) {
             switch (this.key) {
-
                 case 1:
                     recompense = "§aClé Commune";
                     break;
@@ -64,7 +64,7 @@ public class Sucess {
                     break;
 
             }
-        } else if(this.key == 0 && this.money != 0) {
+        } else {
             recompense = "§e" + this.money + "$";
         }
 

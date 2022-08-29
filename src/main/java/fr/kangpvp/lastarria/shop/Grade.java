@@ -1,6 +1,5 @@
-package fr.kangpvp.lastarria.grade;
+package fr.kangpvp.lastarria.shop;
 
-import fr.kangpvp.lastarria.utils.ConfigManager;
 import fr.kangpvp.lastarria.utils.PlayerUtils;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;

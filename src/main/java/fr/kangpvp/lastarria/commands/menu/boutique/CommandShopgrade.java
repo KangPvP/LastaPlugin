@@ -1,6 +1,6 @@
 package fr.kangpvp.lastarria.commands.menu.boutique;
 
-import fr.kangpvp.lastarria.grade.Grade;
+import fr.kangpvp.lastarria.shop.Grade;
 import fr.kangpvp.lastarria.utils.GuiStyle;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
@@ -13,11 +13,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 public class CommandShopgrade implements CommandExecutor {
 

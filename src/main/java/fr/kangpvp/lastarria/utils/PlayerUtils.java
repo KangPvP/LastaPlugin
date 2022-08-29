@@ -67,6 +67,9 @@ public class PlayerUtils {
     public static void giveKey(Player player, int key, int amount) {
         String clename = "";
         switch (key) {
+            case 1:
+                clename = "clé_commune";
+                break;
             case 2:
                 clename = "clé_épique";
                 break;
@@ -74,7 +77,6 @@ public class PlayerUtils {
                 clename = "clé_légendaire";
                 break;
             default:
-                clename = "clé_commune";
                 break;
         }
 

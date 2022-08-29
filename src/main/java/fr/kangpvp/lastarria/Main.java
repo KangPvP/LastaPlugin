@@ -11,6 +11,7 @@ import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
 import fr.kangpvp.lastarria.utils.RegionManager;
+import fr.kangpvp.lastarria.utils.database.DbManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
@@ -20,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 
 public final class Main extends JavaPlugin {
@@ -29,14 +31,18 @@ public final class Main extends JavaPlugin {
     public ArrayList<Player> flying = new ArrayList<>();
     public static HashMap<String, Long> cooldowns = new HashMap<>();
 
+    private DbManager dbManager;
+    private HashMap<UUID, Integer> playerLastaCoin;
+
+
     @Override
     public void onEnable() {
 
         INSTANCE = this;
 
+        dbManager = new DbManager();
 
-        //reloadConfig();
-        //saveDefaultConfig();
+        playerLastaCoin = new HashMap<>();
 
         //LoadConfigFile
         ConfigManager.getInstance().setup();
@@ -83,8 +89,15 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        ConfigManager.getInstance().savePlayersData();
-    }
-    
 
+        ConfigManager.getInstance().savePlayersData();
+        this.dbManager.close();
+    }
+
+    public HashMap<UUID, Integer> getPlayerLastaCoin() {
+        return playerLastaCoin;
+    }
+    public DbManager getDbManager() {
+        return dbManager;
+    }
 }

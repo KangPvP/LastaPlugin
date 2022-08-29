@@ -66,7 +66,6 @@ public class ConfigManager {
 
 	}
 
-
 	public void reloadPlayersData() {
 		pdatacfg = YamlConfiguration.loadConfiguration(playersdatafile);
 		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Le ficher playersdata.yml a ete charger");

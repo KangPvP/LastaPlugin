@@ -1,14 +1,15 @@
 package fr.kangpvp.lastarria.listener;
 
 import fr.kangpvp.lastarria.Main;
-import fr.kangpvp.lastarria.grade.Grade;
+import fr.kangpvp.lastarria.shop.Grade;
+import fr.kangpvp.lastarria.shop.Key;
 import fr.kangpvp.lastarria.sucess.Sucess;
 import fr.kangpvp.lastarria.sucess.SucessList;
 import fr.kangpvp.lastarria.titre.Titre;
 import fr.kangpvp.lastarria.titre.Titres;
 import fr.kangpvp.lastarria.utils.ConfigManager;
 import fr.kangpvp.lastarria.utils.GamePlayer;
-import fr.kangpvp.lastarria.utils.PlayerUtils;
+import fr.kangpvp.lastarria.utils.database.DbConnection;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,20 +18,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.permissions.Permission;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.awt.*;
-import java.util.Map;
+import java.sql.*;
 import java.util.UUID;
 
 
@@ -42,6 +39,32 @@ public class PlayerListener implements Listener {
         UUID uuid = player.getUniqueId();
 
         new GamePlayer(player.getName());
+
+        DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
+
+
+        try{
+            Connection connection = playerConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, name FROM player WHERE uuid = ?");
+
+            preparedStatement.setString(1, uuid.toString());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                int lastacoin = resultSet.getInt("lastacoin");
+
+                Main.INSTANCE.getPlayerLastaCoin().put(uuid, lastacoin); //if player is allready in Cache
+            }else{
+                createUserGrade(connection, player);
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
+
 
         if(!player.hasPlayedBefore()) {
             ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin", 0);
@@ -63,6 +86,26 @@ public class PlayerListener implements Listener {
             player.teleport(new Location(Bukkit.getWorld(world), x, y, z));
         }
     }
+
+    private void createUserGrade(Connection connection, Player player){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO player VALUES ?, ?, ?, ?, ?");
+            long time = System.currentTimeMillis();
+
+            preparedStatement.setInt(1, 1);
+            preparedStatement.setString(2, player.getUniqueId().toString());
+            preparedStatement.setString(3, player.getName());
+            preparedStatement.setInt(4, 0);
+            preparedStatement.setTimestamp(5, new Timestamp(time));
+            preparedStatement.setTimestamp(6, new Timestamp(time));
+            preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event){
@@ -197,7 +240,7 @@ public class PlayerListener implements Listener {
             }
 
 
-            if(item.getItemMeta().getDisplayName().equals("§6§lMenu - §fPrincipale")){
+            if(item.getItemMeta().getDisplayName().equals("§6§lMenu")){
                 player.closeInventory();
                 player.performCommand("gui open info");
             }
@@ -212,6 +255,53 @@ public class PlayerListener implements Listener {
 
             }
 
+        }else if(invView.getTitle().equals("§e§lClé LootBox")){
+            event.setCancelled(true);
+            if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
+                player.closeInventory();
+            }
+
+            if(item.getItemMeta().getDisplayName().equals("§6§lMenu")){
+                player.closeInventory();
+                player.performCommand("gui open info");
+            }
+
+            switch (slot){
+                case 11:
+                    Key.buyKey(player, 75, 1, 1);
+                    break;
+                case 20:
+                    Key.buyKey(player, 225, 1, 4);
+                    break;
+                case 29:
+                    Key.buyKey(player, 450, 1, 10);
+                    break;
+
+                case 13:
+                    Key.buyKey(player, 150, 2, 1);
+                    break;
+                case 22:
+                    Key.buyKey(player, 450, 2, 4);
+                    break;
+                case 31:
+                    Key.buyKey(player, 900, 2, 10);
+                    break;
+
+                case 15:
+                    Key.buyKey(player, 300, 3, 1);
+                    break;
+                case 24:
+                    Key.buyKey(player, 900, 3, 4);
+                    break;
+                case 33:
+                    Key.buyKey(player, 1800, 3, 10);
+                    break;
+
+                default:
+                    System.out.println("Erreur buy Key");
+                    break;
+            }
+
         }else if (invView.getTitle().equals("§e§lBoutique")){
             event.setCancelled(true);
 
@@ -219,7 +309,7 @@ public class PlayerListener implements Listener {
                 player.closeInventory();
             }
 
-            if(item.getItemMeta().getDisplayName().equals("§6§lMenu - §fPrincipale")){
+            if(item.getItemMeta().getDisplayName().equals("§6§lMenu")){
                 player.closeInventory();
                 player.performCommand("gui open info");
             }
@@ -259,6 +349,16 @@ public class PlayerListener implements Listener {
             }
 
         } else if(invView.getTitle().equals("§eSucces")) {
+            event.setCancelled(true);
+            if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
+                player.closeInventory();
+            }
+
+            if(item.getItemMeta().getDisplayName().equals("§6§lMenu")){
+                player.closeInventory();
+                player.performCommand("gui open info");
+            }
+
 
             Sucess sucess = SucessList.getSucessFromName(item.getItemMeta().getDisplayName());
             if(sucess != null) {
@@ -268,9 +368,6 @@ public class PlayerListener implements Listener {
                     player.performCommand("succes");
                 } , 8);
             }
-            event.setCancelled(true);
-
-
 
         }
 }
@@ -281,6 +378,7 @@ public class PlayerListener implements Listener {
         Entity killer = event.getDamager();
 
         if(victime instanceof Player && killer instanceof Player){
+
             if(victime.hasPermission("lastarria.player.pvp") && killer.hasPermission("lastarria.player.pvp")){
 
             } else {
