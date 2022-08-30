@@ -15,16 +15,20 @@ public class CommandFly implements CommandExecutor {
         if(sender instanceof Player) {
             Player player = (Player) sender;
 
-            if(Main.INSTANCE.flying.contains(player)) {
-                player.setAllowFlight(false);
-                player.sendMessage("§3Tu as désactivé le mode fly");
-                Main.INSTANCE.flying.remove(player);
-            }
-            else if (!Main.INSTANCE.flying.contains(player)){
-                player.setAllowFlight(true);
-                player.setFlySpeed((float) 0.06);
-                player.sendMessage("§3Tu as activé le mode fly");
-                Main.INSTANCE.flying.add(player);
+            if(!player.getLocation().getWorld().getName().equals("Aragnok")) {
+
+                if (Main.INSTANCE.flying.contains(player)) {
+                    player.setAllowFlight(false);
+                    player.sendMessage("§3Tu as désactivé le mode fly");
+                    Main.INSTANCE.flying.remove(player);
+                } else if (!Main.INSTANCE.flying.contains(player)) {
+                    player.setAllowFlight(true);
+                    player.setFlySpeed((float) 0.06);
+                    player.sendMessage("§3Tu as activé le mode fly");
+                    Main.INSTANCE.flying.add(player);
+                }
+            } else{
+                player.sendMessage("§3Tu ne peux pas fly dans ce monde");
             }
         }
 
