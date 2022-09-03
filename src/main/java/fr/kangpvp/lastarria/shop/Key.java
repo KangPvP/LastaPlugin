@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 
 public class Key {
 
-    public static void buyKey(Player player, double prix, int nbkey, int amount){
-        double money = PlayerUtils.getLastaCoin(player);
+    public static void buyKey(Player player, int prix, int nbkey, int amount){
+        int money = (int) PlayerUtils.getLastaCoin(player);
 
         if(money >= prix){
             PlayerUtils.removeLastaCoin(player, prix);

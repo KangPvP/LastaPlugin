@@ -1,6 +1,8 @@
 package fr.kangpvp.lastarria.utils;
 
+import fr.kangpvp.lastarria.Main;
 import fr.kangpvp.lastarria.sucess.SucessList;
+import fr.kangpvp.lastarria.utils.database.DbConnection;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,9 +15,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerUtils {
 
@@ -23,6 +27,7 @@ public class PlayerUtils {
 
         return player.getStatistic(Statistic.PLAY_ONE_MINUTE);
     }
+
 
     public static double getMoney(Player player){
         return Double.parseDouble(PlaceholderAPI.setPlaceholders(player, "%vault_eco_balance%"));
@@ -41,27 +46,102 @@ public class PlayerUtils {
     }
 
 
-
     public static double getLastaCoin(Player player){
-        return ConfigManager.pdatacfg.getDouble("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin");
+
+        String uuid = player.getUniqueId().toString();
+
+        int lastacoin = 0;
+
+        String sql = "SELECT uuid, lastacoin FROM player WHERE uuid = '" + uuid + "'";
+
+        DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
+
+        try {
+            Connection connection = playerConnection.getConnection();
+
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                lastacoin = rs.getInt("lastacoin");
+            }
+
+            rs.close();
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lastacoin;
     }
 
-    public static void addLastaCoin(Player player, double amount){
-        ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin", getLastaCoin(player) + amount);
-        ConfigManager.getInstance().savePlayersData();
-        ConfigManager.getInstance().reloadPlayersData();
+    public static void addLastaCoin(Player player, int amount){
+        String uuid = player.getUniqueId().toString();
+
+        int lastacoin = (int) PlayerUtils.getLastaCoin(player);
+        int lastacoinAdd = lastacoin + amount;
+
+        long time = System.currentTimeMillis();
+
+        DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
+        String sql = "UPDATE player SET lastacoin = ?, update_at = ? WHERE uuid = '" + uuid + "'";
+
+        try {
+            Connection connection = playerConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, lastacoinAdd);
+            preparedStatement.setTimestamp(2, new Timestamp(time));
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void removeLastaCoin(Player player, double amount){
-        ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin", getLastaCoin(player) - amount);
-        ConfigManager.getInstance().savePlayersData();
-        ConfigManager.getInstance().reloadPlayersData();
+    public static void removeLastaCoin(Player player, int amount){
+        String uuid = player.getUniqueId().toString();
+
+        int lastacoin = (int) PlayerUtils.getLastaCoin(player);
+        int lastacoinRemove = lastacoin - amount;
+
+        long time = System.currentTimeMillis();
+
+        DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
+        String sql = "UPDATE player SET lastacoin = ?, update_at = ? WHERE uuid = '" + uuid + "'";
+
+        try {
+            Connection connection = playerConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, lastacoinRemove);
+            preparedStatement.setTimestamp(2, new Timestamp(time));
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void setLastaCoin(Player player, double amount){
-        ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin", amount);
-        ConfigManager.getInstance().savePlayersData();
-        ConfigManager.getInstance().reloadPlayersData();
+    public static void setLastaCoin(Player player, int amount){
+        String uuid = player.getUniqueId().toString();
+        long time = System.currentTimeMillis();
+
+        DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
+        String sql = "UPDATE player SET lastacoin = ?, update_at = ? WHERE uuid = '" + uuid + "'";
+
+        try {
+            Connection connection = playerConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, amount);
+            preparedStatement.setTimestamp(2, new Timestamp(time));
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void giveKey(Player player, int key, int amount) {

@@ -56,9 +56,15 @@ public class PlayerListener implements Listener {
             if(resultSet.next()){
                 int lastacoin = resultSet.getInt("lastacoin");
 
-                Main.INSTANCE.getPlayerLastaCoin().put(uuid, lastacoin); //if player is allready in Cache
+                if(Main.INSTANCE.getPlayerLastaCoin().containsKey(uuid)){
+                    //if player is allready in Cache
+                }else{
+                    Main.INSTANCE.getPlayerLastaCoin().put(uuid, lastacoin);
+                }
+
             }else{
                 createUserGrade(connection, player);
+                Main.INSTANCE.getPlayerLastaCoin().put(uuid, 0);
             }
 
         } catch (SQLException e){
@@ -91,33 +97,61 @@ public class PlayerListener implements Listener {
 
     private void createUserGrade(Connection connection, Player player){
 
-        try{
-            Statement stmt = connection.createStatement();
+
+        try {
+
+            Statement st = connection.createStatement();
             String sql = "SELECT id FROM player ORDER BY id DESC LIMIT 1";
-            ResultSet rs = stmt.executeQuery(sql);
-            int id = rs.getInt(1);
+            ResultSet rs = st.executeQuery(sql);
+
+            int id = 0;
+
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+
+            rs.close();
+            st.close();
 
             System.out.println(id + " : TEST");
 
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO player (id, uuid, name, lastacoin, join_at, update_at) VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO player (id, uuid, name, lastacoin, atm, join_at, update_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
             long time = System.currentTimeMillis();
 
-            preparedStatement.setInt(1, 2);
+            preparedStatement.setInt(1, id + 1);
             preparedStatement.setString(2, player.getUniqueId().toString());
             preparedStatement.setString(3, player.getName());
             preparedStatement.setInt(4, 0);
-            preparedStatement.setTimestamp(5, new Timestamp(time));
+            preparedStatement.setInt(5, 0);
             preparedStatement.setTimestamp(6, new Timestamp(time));
+            preparedStatement.setTimestamp(7, new Timestamp(time));
             preparedStatement.executeUpdate();
+
+            String uuid = player.getUniqueId().toString();
+
+            PreparedStatement preStatCo = connection.prepareStatement("INSERT INTO lastco (uuid, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+            //Location loc = new Location(Bukkit.getWorld("Aragnok"), 718.5, 74, 72.5, -90, 0);
+
+
+
+            preStatCo.setString(1, uuid);
+            preStatCo.setString(2, "Aragnok");
+            preStatCo.setDouble(3, 718.5);
+            preStatCo.setDouble(4, 74);
+            preStatCo.setDouble(5, 72.5);
+            preStatCo.setFloat(6, -90);
+            preStatCo.setFloat(7, 0);
+            preStatCo.executeUpdate();
+
+
+
+            System.out.println(" : TEST PreparedStatement");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
 
@@ -127,12 +161,49 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
+        String uuid = player.getUniqueId().toString();
 
         String world = player.getLocation().getWorld().getName();
-        Double x = player.getLocation().getX();
-        Double y = player.getLocation().getY();
-        Double z = player.getLocation().getZ();
+        double x = player.getLocation().getX();
+        double y = player.getLocation().getY();
+        double z = player.getLocation().getZ();
+        float yaw = player.getLocation().getYaw();
+        float pitch = player.getLocation().getPitch();
+
+        DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
+
+        try {
+            Connection connection = playerConnection.getConnection();
+
+            String sql = "UPDATE lastco SET world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ? WHERE uuid = '" + uuid + "'";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, world);
+            preparedStatement.setDouble(2, x);
+            preparedStatement.setDouble(3, y);
+            preparedStatement.setDouble(4, z);
+            preparedStatement.setFloat(5, yaw);
+            preparedStatement.setFloat(6, pitch);
+            preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         String key = "Joueurs." + uuid + ".data.lastco";
 
@@ -340,27 +411,27 @@ public class PlayerListener implements Listener {
                     }else if(player.hasPermission("group.legende")){
 
                     }else {
-                        Grade.buyGrade(player, "vip", 1000.00);
+                        Grade.buyGrade(player, "vip", 1000);
                     }
                 }else if(slot == 22){ //Item Heros
                     if(player.hasPermission("group.vip") && !player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
-                        Grade.buyGrade(player, "heros", 1000.00);
+                        Grade.buyGrade(player, "heros", 1000);
                     }else if(player.hasPermission("group.heros")){
                         player.sendMessage("Vous avez déja ce grade");
                     }else if(player.hasPermission("group.legende")){
 
                     }else {
-                        Grade.buyGrade(player, "heros", 2000.00);
+                        Grade.buyGrade(player, "heros", 2000);
                     }
                 }else if(slot == 24){ //Item Légende
                     if(player.hasPermission("group.vip") && !player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
-                        Grade.buyGrade(player, "legende", 2500.00);
+                        Grade.buyGrade(player, "legende", 2500);
                     }else if(player.hasPermission("group.heros") && !player.hasPermission("group.legende")){
-                        Grade.buyGrade(player, "legende", 1500.00);
+                        Grade.buyGrade(player, "legende", 1500);
                     }else if(player.hasPermission("group.legende")){
                         player.sendMessage("Vous avez déja ce grade");
                     }else {
-                        Grade.buyGrade(player, "legende", 3500.00);
+                        Grade.buyGrade(player, "legende", 3500);
                     }
                 }
             }

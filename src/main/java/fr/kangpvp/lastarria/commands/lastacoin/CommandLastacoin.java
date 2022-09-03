@@ -15,17 +15,13 @@ public class CommandLastacoin implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-            if(args.length != 3){
-                System.out.println("/lastacoin [add/remove/set] <target> <amount>");
-                return true;
-            }
+        if(args.length == 3){
 
             String element = args[0];
             Player target = Bukkit.getPlayer(args[1]);
-            double amount = Double.parseDouble(args[2]);
+            int amount = Integer.parseInt(args[2]);
 
             switch(element) {
-
                 case "add":
                     PlayerUtils.addLastaCoin(target, amount);
                     break;
@@ -36,9 +32,37 @@ public class CommandLastacoin implements CommandExecutor, TabCompleter {
                     PlayerUtils.setLastaCoin(target, amount);
                     break;
                 default:
-                    System.out.println("Veuillez ajouter un element valide: 'add' 'remove' 'set'");
+                    System.out.println("Veuillez ajouter un element valide: 'get' 'add' 'remove' 'set'");
                     break;
             }
+
+        }else if(args.length == 2){
+
+            String element = args[0];
+            Player target = Bukkit.getPlayer(args[1]);
+            int lastacoin;
+
+            switch(element) {
+
+                case "get":
+                    lastacoin = (int) PlayerUtils.getLastaCoin(target);
+                    System.out.println(target.getName() + " a " + lastacoin + " LC");
+                    break;
+
+                default:
+                    System.out.println("Veuillez ajouter un element valide: 'get' 'add' 'remove' 'set'");
+                    break;
+            }
+
+        }else{
+            System.out.println("/lastacoin [get/add/remove/set] <target> <amount>");
+            return true;
+        }
+
+
+
+
+
 
         return false;
     }
@@ -48,6 +72,7 @@ public class CommandLastacoin implements CommandExecutor, TabCompleter {
 
         if (args.length == 1){
             List<String> action = new ArrayList<>();
+            action.add("get");
             action.add("add");
             action.add("remove");
             action.add("set");

@@ -90,8 +90,8 @@ public class Grade {
         return prix;
     }
 
-    public static void buyGrade(Player player, String name, double prix) {
-        double money = PlayerUtils.getLastaCoin(player);
+    public static void buyGrade(Player player, String name, int prix) {
+        int money = (int) PlayerUtils.getLastaCoin(player);
 
         if(money >= prix){
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "luckperms user " + player.getName() + " parent add " + name);
