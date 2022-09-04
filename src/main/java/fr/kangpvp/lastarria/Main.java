@@ -65,6 +65,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("spawn").setExecutor(new CommandSpawn());
         Bukkit.getPluginCommand("close").setExecutor(new CommandClose());
         Bukkit.getPluginCommand("pvp").setExecutor(new CommandPvp());
+        Bukkit.getPluginCommand("atm").setExecutor(new CommandAtm());
 
         Bukkit.getPluginCommand("tuto").setExecutor(new CommandTuto());
         Bukkit.getPluginCommand("succes").setExecutor(new CommandSucces());
