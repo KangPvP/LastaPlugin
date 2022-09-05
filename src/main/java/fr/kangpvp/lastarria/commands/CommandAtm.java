@@ -9,7 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.security.Permission;
 import java.sql.*;
 import java.util.UUID;
 
@@ -22,89 +21,81 @@ public class CommandAtm implements CommandExecutor {
             Player player = (Player) sender;
             UUID uuid = player.getUniqueId();
 
-            int playTimeAll = PlayerUtils.getTimePlayed(player);
-
-            int playTimeReset = 0;
-
-            String sql_1 = "SELECT uuid, atm FROM player WHERE uuid = '" + uuid + "'";
-
             DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
 
-            try {
-                Connection connection = playerConnection.getConnection();
-
-                Statement st = connection.createStatement();
-                ResultSet rs = st.executeQuery(sql_1);
-
-                while (rs.next()) {
-                    playTimeReset = rs.getInt("atm");
-                }
-
-                rs.close();
-                st.close();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
+            int playTimeAll = PlayerUtils.getTimePlayed(player);
+            int playTimeReset = getDbAtm(uuid, playerConnection);
             int playTime = playTimeAll - playTimeReset;
 
-
-            System.out.println("playTimeAll:" + playTimeAll);
-            System.out.println("playTimeReset:" + playTimeReset);
-
-            System.out.println("playTime:" + playTime);
+            if(playTime < 6000){
+                player.sendMessage("Attendes " + (300-playTime/20) + " secondes avant de pouvoir faire cela");
+                return false;
+            }
 
             double playTimeMin = playTime/1200;
 
-            //double playTimeHourRound = Math.round(playTimeHour*100.0)/100.0; //Arrondi 2 chiffres ex: 0.00
-
-            System.out.println("playTimeHour: " + playTimeMin);
-
-            double atm = 0.5; // 30$ / heures
-
-            if(player.hasPermission("displayname.Seigneur")){
-                atm = 2; // 120$ / heures
-            }else if(player.hasPermission("displayname.Baron")){
-                atm = 1.33; // 80$ / heures
-            }else if(player.hasPermission("displayname.Écuyer")){
-                atm = 0.83; // 50$ / heures
-            }
-
-
-
+            double atm = playerAtmFacteur(player);
             double money = playTimeMin*atm;
             double moneyRound = Math.round(money*100.0)/100.0; //Arrondi 2 chiffres ex: 0.00
 
-            System.out.println("money: " + money);
+            String formatPlayTime = displayTime(playTime);
 
-
-            String disTime = displayTime(playTime);
+            /*System.out.println("playTimeAll:" + playTimeAll);
+            System.out.println("playTimeReset:" + playTimeReset);
+            System.out.println("playTime:" + playTime);
+            System.out.println("playTimeHour: " + playTimeMin);
+            System.out.println("money: " + money);*/
 
             if(money > 2500){
+                money = 2500+(money-2500)/10;
                 player.sendMessage("Tu as dépasser la limite de money sur ATM");
-                player.sendMessage("Vous avez donc récupérer §e" + 2500 + "$ §fpour §2" + disTime + "§f de temps de jeu");
+                player.sendMessage("Vous avez donc récupérer §e" + money + "$ §fpour §2" + formatPlayTime + "§f de temps de jeu");
             }else{
-                player.sendMessage("Vous avez récupérer §e" + moneyRound + " §fpour §2" + disTime + "§f de temps de jeu");
+                player.sendMessage("Vous avez récupérer §e" + moneyRound + " §fpour §2" + formatPlayTime + "§f de temps de jeu");
             }
 
                 PlayerUtils.addMoney(player, money);
-
-                actualiseATM(uuid, playTimeAll, playerConnection);
-
+                updateDbAtm(uuid, playTimeAll, playerConnection);
+                Main.cooldowns.put(player.getName(), System.currentTimeMillis());
         }
 
         return false;
     }
 
-    private void actualiseATM(UUID uuid, int playTimeAll, DbConnection playerConnection){
+    private Integer getDbAtm(UUID uuid, DbConnection playerConnection){
+        String sql = "SELECT uuid, atm FROM player WHERE uuid = '" + uuid + "'";
 
-        long time = System.currentTimeMillis();
-        String sql_2 = "UPDATE player SET atm = ?, update_at = ? WHERE uuid = '" + uuid + "'";
+        int playTimeReset = 0;
 
         try {
             Connection connection = playerConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql_2);
+
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                playTimeReset = rs.getInt("atm");
+            }
+
+            rs.close();
+            st.close();
+
+            return playTimeReset;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return playTimeReset;
+        }
+    }
+
+    private void updateDbAtm(UUID uuid, int playTimeAll, DbConnection playerConnection){
+
+        long time = System.currentTimeMillis();
+        String sql = "UPDATE player SET atm = ?, update_at = ? WHERE uuid = '" + uuid + "'";
+
+        try {
+            Connection connection = playerConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setInt(1, playTimeAll);
             preparedStatement.setTimestamp(2, new Timestamp(time));
@@ -115,22 +106,30 @@ public class CommandAtm implements CommandExecutor {
         }
     }
 
-    private String displayTime(int ticks) {
-        double ticksSec = Math.floor(ticks/20);
-        System.out.println("ss: " + ticksSec);
-        int hh = (int) Math.floor(ticksSec/3600);
-        System.out.println("hh: " + hh);
-        int mm = (int) Math.floor((ticksSec % 3600) / 60);
-        System.out.println("mm: " + mm);
+    private Double playerAtmFacteur(Player player){
+        double atm = 0.5; // 30$ / heures
 
-        //hh = (hh < 10 ? '0' + hh : hh);
-        //mm = (mm < 10 ? '0' + mm : mm);
+        if(player.hasPermission("displayname.Seigneur")){
+            atm = 2; // 120$ / heures
+        }else if(player.hasPermission("displayname.Baron")){
+            atm = 1.33; // 80$ / heures
+        }else if(player.hasPermission("displayname.Écuyer")){
+            atm = 0.83; // 50$ / heures
+        }
+
+        return atm;
+    }
+
+    private String displayTime(int ticks) {
+
+        double ticksSec = Math.floor(ticks/20);
+        int hh = (int) Math.floor(ticksSec/3600);
+        int mm = (int) Math.floor((ticksSec % 3600) / 60);
 
         if(hh == 0){
             return mm + "min";
         }else{
             return "" + hh + "h et " + mm + "min";
         }
-
     }
 }

@@ -37,7 +37,6 @@ public final class Main extends JavaPlugin {
 
     public static HashMap<String, Long> cooldowns = new HashMap<>();
 
-    public HashMap<UUID, Integer> playerAtm = new HashMap<>();
     public HashMap<UUID, Integer> playerLastaCoin = new HashMap<>();
 
     private DbManager dbManager;

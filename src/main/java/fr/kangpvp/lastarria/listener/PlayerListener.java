@@ -45,58 +45,28 @@ public class PlayerListener implements Listener {
         try{
 
             Connection connection = playerConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, name, lastacoin, atm FROM player WHERE uuid = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, name, lastacoin FROM player WHERE uuid = ?");
 
-            preparedStatement.setString(1, uuid.toString()); //test First Co
+            preparedStatement.setString(1, uuid.toString());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next()){
+            if(resultSet.next()){                   //test First Co
                 //If is the player hasplayedbefore
                 int lastacoin = resultSet.getInt("lastacoin");
-                int atm = resultSet.getInt("atm");
 
                 if(!Main.INSTANCE.playerLastaCoin.containsKey(uuid)){
                     Main.INSTANCE.playerLastaCoin.put(uuid, lastacoin);
                 }
 
-                if(!Main.INSTANCE.playerAtm.containsKey(uuid)){
-                    Main.INSTANCE.playerAtm.put(uuid, atm);
-                }
-
-
             }else{
                 //If is the First Connection
                 createUserGrade(connection, player);
                 Main.INSTANCE.playerLastaCoin.put(uuid, 0);
-                Main.INSTANCE.playerAtm.put(uuid, 0);
             }
 
         } catch (SQLException e){
             e.printStackTrace();
-        }
-
-
-
-
-        if(!player.hasPlayedBefore()) {
-            ConfigManager.pdatacfg.set("Joueurs." + player.getUniqueId() + ".data" + ".lastacoin", 0);
-
-            String key = "Joueurs." + uuid + ".data.worlds.survie";
-            ConfigManager.pdatacfg.set(key + ".world", "first");
-            ConfigManager.getInstance().savePlayersData();
-            ConfigManager.getInstance().reloadPlayersData();
-
-            player.teleport(new Location(Bukkit.getWorld("Aragnok"), 400, 70,351, 36, 0));
-
-        } else {
-            String key = "Joueurs." + uuid + ".data.lastco";
-            String world = (String) ConfigManager.pdatacfg.get(key + ".world");
-            Double x = (Double) ConfigManager.pdatacfg.get(key + ".x");
-            Double y = (Double) ConfigManager.pdatacfg.get(key + ".y");
-            Double z = (Double) ConfigManager.pdatacfg.get(key + ".z");
-
-            player.teleport(new Location(Bukkit.getWorld(world), x, y, z));
         }
     }
 
