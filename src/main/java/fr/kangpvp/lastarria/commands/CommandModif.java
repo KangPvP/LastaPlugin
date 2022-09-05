@@ -12,6 +12,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -34,6 +36,8 @@ public class CommandModif implements CommandExecutor {
             ItemStack item = player.getInventory().getItemInMainHand();
             ItemMeta meta = item.getItemMeta();
 
+            PotionEffect potion = new PotionEffect(PotionEffectType.FAST_DIGGING, 1200, 2, false,false);
+
             meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, modifier);
             meta.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, modifiers);
             meta.addAttributeModifier(Attribute.HORSE_JUMP_STRENGTH, modifierss);
@@ -44,6 +48,8 @@ public class CommandModif implements CommandExecutor {
             item.setItemMeta(meta);
 
 
+
+            player.addPotionEffect(potion);
 
 
         }

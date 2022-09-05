@@ -9,7 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.security.Permission;
 import java.sql.*;
+import java.util.UUID;
 
 public class CommandAtm implements CommandExecutor {
 
@@ -18,7 +20,7 @@ public class CommandAtm implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player){
             Player player = (Player) sender;
-            String uuid = player.getUniqueId().toString();
+            UUID uuid = player.getUniqueId();
 
             int playTimeAll = PlayerUtils.getTimePlayed(player);
 
@@ -45,7 +47,7 @@ public class CommandAtm implements CommandExecutor {
                 e.printStackTrace();
             }
 
-            double playTime = playTimeAll - playTimeReset;
+            int playTime = playTimeAll - playTimeReset;
 
 
             System.out.println("playTimeAll:" + playTimeAll);
@@ -53,45 +55,49 @@ public class CommandAtm implements CommandExecutor {
 
             System.out.println("playTime:" + playTime);
 
-            double playTimeHour = playTime/72000;
-            double playTimeHourRound = Math.round(playTimeHour*100.0)/100.0; //Arrondi 2 chiffres ex: 0.00
+            double playTimeMin = playTime/1200;
 
-            System.out.println("playTimeHour: " + playTimeHour);
+            //double playTimeHourRound = Math.round(playTimeHour*100.0)/100.0; //Arrondi 2 chiffres ex: 0.00
 
-            double atm = 30;
+            System.out.println("playTimeHour: " + playTimeMin);
 
-            double money = playTimeHour*atm;
+            double atm = 0.5; // 30$ / heures
+
+            if(player.hasPermission("displayname.Seigneur")){
+                atm = 2; // 120$ / heures
+            }else if(player.hasPermission("displayname.Baron")){
+                atm = 1.33; // 80$ / heures
+            }else if(player.hasPermission("displayname.Écuyer")){
+                atm = 0.83; // 50$ / heures
+            }
+
+
+
+            double money = playTimeMin*atm;
             double moneyRound = Math.round(money*100.0)/100.0; //Arrondi 2 chiffres ex: 0.00
 
             System.out.println("money: " + money);
 
+
+            String disTime = displayTime(playTime);
+
             if(money > 2500){
-                money = 2500;
-
-                PlayerUtils.addMoney(player, money);
-
-                actualiseATM(uuid, playTimeAll, playerConnection);
-
                 player.sendMessage("Tu as dépasser la limite de money sur ATM");
-                player.sendMessage("Vous avez donc récupérer " + moneyRound + " pour " + playTimeHourRound + " heures de jeu");
-
-
+                player.sendMessage("Vous avez donc récupérer §e" + 2500 + "$ §fpour §2" + disTime + "§f de temps de jeu");
             }else{
+                player.sendMessage("Vous avez récupérer §e" + moneyRound + " §fpour §2" + disTime + "§f de temps de jeu");
+            }
 
                 PlayerUtils.addMoney(player, money);
 
                 actualiseATM(uuid, playTimeAll, playerConnection);
 
-                player.sendMessage("Vous avez récupérer " + moneyRound + " pour " + playTimeHourRound + " heures de jeu");
-            }
         }
-
-
 
         return false;
     }
 
-    private void actualiseATM(String uuid, int playTimeAll, DbConnection playerConnection){
+    private void actualiseATM(UUID uuid, int playTimeAll, DbConnection playerConnection){
 
         long time = System.currentTimeMillis();
         String sql_2 = "UPDATE player SET atm = ?, update_at = ? WHERE uuid = '" + uuid + "'";
@@ -109,6 +115,22 @@ public class CommandAtm implements CommandExecutor {
         }
     }
 
+    private String displayTime(int ticks) {
+        double ticksSec = Math.floor(ticks/20);
+        System.out.println("ss: " + ticksSec);
+        int hh = (int) Math.floor(ticksSec/3600);
+        System.out.println("hh: " + hh);
+        int mm = (int) Math.floor((ticksSec % 3600) / 60);
+        System.out.println("mm: " + mm);
 
+        //hh = (hh < 10 ? '0' + hh : hh);
+        //mm = (mm < 10 ? '0' + mm : mm);
 
+        if(hh == 0){
+            return mm + "min";
+        }else{
+            return "" + hh + "h et " + mm + "min";
+        }
+
+    }
 }

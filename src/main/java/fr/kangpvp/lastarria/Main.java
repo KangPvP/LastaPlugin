@@ -11,6 +11,7 @@ import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
 import fr.kangpvp.lastarria.utils.RegionManager;
+import fr.kangpvp.lastarria.utils.database.DbConnection;
 import fr.kangpvp.lastarria.utils.database.DbManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,6 +20,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -29,10 +34,13 @@ public final class Main extends JavaPlugin {
     public static Main INSTANCE;
     public static RegionManager portailTp;
     public ArrayList<Player> flying = new ArrayList<>();
+
     public static HashMap<String, Long> cooldowns = new HashMap<>();
 
+    public HashMap<UUID, Integer> playerAtm = new HashMap<>();
+    public HashMap<UUID, Integer> playerLastaCoin = new HashMap<>();
+
     private DbManager dbManager;
-    private HashMap<UUID, Integer> playerLastaCoin;
 
 
     @Override
@@ -95,9 +103,6 @@ public final class Main extends JavaPlugin {
         this.dbManager.close();
     }
 
-    public HashMap<UUID, Integer> getPlayerLastaCoin() {
-        return playerLastaCoin;
-    }
     public DbManager getDbManager() {
         return dbManager;
     }

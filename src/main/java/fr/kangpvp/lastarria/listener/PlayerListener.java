@@ -42,29 +42,34 @@ public class PlayerListener implements Listener {
 
         DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
 
-
         try{
 
             Connection connection = playerConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, name, lastacoin FROM player WHERE uuid = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, name, lastacoin, atm FROM player WHERE uuid = ?");
 
-            System.out.println("Test PreparedStatement");
-            preparedStatement.setString(1, uuid.toString());
+            preparedStatement.setString(1, uuid.toString()); //test First Co
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if(resultSet.next()){
+                //If is the player hasplayedbefore
                 int lastacoin = resultSet.getInt("lastacoin");
+                int atm = resultSet.getInt("atm");
 
-                if(Main.INSTANCE.getPlayerLastaCoin().containsKey(uuid)){
-                    //if player is allready in Cache
-                }else{
-                    Main.INSTANCE.getPlayerLastaCoin().put(uuid, lastacoin);
+                if(!Main.INSTANCE.playerLastaCoin.containsKey(uuid)){
+                    Main.INSTANCE.playerLastaCoin.put(uuid, lastacoin);
                 }
 
+                if(!Main.INSTANCE.playerAtm.containsKey(uuid)){
+                    Main.INSTANCE.playerAtm.put(uuid, atm);
+                }
+
+
             }else{
+                //If is the First Connection
                 createUserGrade(connection, player);
-                Main.INSTANCE.getPlayerLastaCoin().put(uuid, 0);
+                Main.INSTANCE.playerLastaCoin.put(uuid, 0);
+                Main.INSTANCE.playerAtm.put(uuid, 0);
             }
 
         } catch (SQLException e){
@@ -161,7 +166,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
-        String uuid = player.getUniqueId().toString();
+        UUID uuid = player.getUniqueId();
 
         String world = player.getLocation().getWorld().getName();
         double x = player.getLocation().getX();
@@ -175,7 +180,7 @@ public class PlayerListener implements Listener {
         try {
             Connection connection = playerConnection.getConnection();
 
-            String sql = "UPDATE lastco SET world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ? WHERE uuid = '" + uuid + "'";
+            String sql = "UPDATE lastco SET world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ? WHERE uuid = '" + uuid.toString() + "'";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             preparedStatement.setString(1, world);
@@ -190,29 +195,6 @@ public class PlayerListener implements Listener {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        String key = "Joueurs." + uuid + ".data.lastco";
-
-        ConfigManager.pdatacfg.set(key + ".world", world);
-        ConfigManager.pdatacfg.set(key + ".x", x);
-        ConfigManager.pdatacfg.set(key + ".y", y);
-        ConfigManager.pdatacfg.set(key + ".z", z);
-        ConfigManager.getInstance().savePlayersData();
-        ConfigManager.getInstance().reloadPlayersData();
     }
 
 
@@ -291,7 +273,8 @@ public class PlayerListener implements Listener {
 
         ItemStack item = event.getItem();
 
-        if(item.getType().equals(Material.DIAMOND_AXE)){
+
+        if(item.getType().equals(Material.NETHERITE_AXE)){
             player.sendMessage("Hello 2");
             if(item.getItemMeta().getCustomModelData() == 1){
                 player.sendMessage("Hello 3");
@@ -440,11 +423,13 @@ public class PlayerListener implements Listener {
             event.setCancelled(true);
             if(item.getItemMeta().getDisplayName().equals("§4§lFermer")){
                 player.closeInventory();
+                return;
             }
 
             if(item.getItemMeta().getDisplayName().equals("§6§lMenu")){
                 player.closeInventory();
                 player.performCommand("gui open info");
+                return;
             }
 
 
