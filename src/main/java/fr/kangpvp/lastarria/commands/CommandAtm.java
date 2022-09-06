@@ -10,10 +10,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class CommandAtm implements CommandExecutor {
 
+    public static HashMap<UUID, Long> cooldownAtm = new HashMap<>();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -21,16 +23,21 @@ public class CommandAtm implements CommandExecutor {
             Player player = (Player) sender;
             UUID uuid = player.getUniqueId();
 
+            if(cooldownAtm.containsKey(uuid)) {
+                long timeLeft = ((cooldownAtm.get(uuid)/1000)+300) - (System.currentTimeMillis()/1000);
+                if(timeLeft>0){
+                    player.sendMessage("Attendes " + timeLeft + " secondes avant de pouvoir faire cela");
+                    return false;
+                }
+            }
+            //Admin4786
+            //znmdnB5MJSme4Mn
+
             DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
 
             int playTimeAll = PlayerUtils.getTimePlayed(player);
             int playTimeReset = getDbAtm(uuid, playerConnection);
             int playTime = playTimeAll - playTimeReset;
-
-            if(playTime < 6000){
-                player.sendMessage("Attendes " + (300-playTime/20) + " secondes avant de pouvoir faire cela");
-                return false;
-            }
 
             double playTimeMin = playTime/1200;
 
@@ -56,7 +63,7 @@ public class CommandAtm implements CommandExecutor {
 
                 PlayerUtils.addMoney(player, money);
                 updateDbAtm(uuid, playTimeAll, playerConnection);
-                Main.cooldowns.put(player.getName(), System.currentTimeMillis());
+                cooldownAtm.put(uuid, System.currentTimeMillis());
         }
 
         return false;

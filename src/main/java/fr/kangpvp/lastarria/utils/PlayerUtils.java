@@ -4,6 +4,8 @@ import fr.kangpvp.lastarria.Main;
 import fr.kangpvp.lastarria.sucess.SucessList;
 import fr.kangpvp.lastarria.utils.database.DbConnection;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
@@ -23,22 +25,34 @@ import java.util.UUID;
 
 public class PlayerUtils {
 
+    public static Economy econ = Main.INSTANCE.getEconomy();
+
     public static int getTimePlayed(Player player) {
 
         return player.getStatistic(Statistic.PLAY_ONE_MINUTE);
     }
 
-
     public static double getMoney(Player player){
-        return Double.parseDouble(PlaceholderAPI.setPlaceholders(player, "%vault_eco_balance%"));
+        return econ.getBalance(player);
+        //return Double.parseDouble(PlaceholderAPI.setPlaceholders(player, "%vault_eco_balance%"));
     }
 
     public static void addMoney(Player player, double amount) {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "eco give " + player.getName() + " " + amount);
+        EconomyResponse rep = econ.depositPlayer(player, amount);
+        if(!rep.transactionSuccess()){
+            System.out.println("[Lastarria] ERROR - addMoney : " + player.getName() + " => " + amount);
+        }
+
+        //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "eco give " + player.getName() + " " + amount);
     }
 
     public static void takeMoney(Player player, double amount) {
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "eco take " + player.getName() + " " + amount);
+        EconomyResponse rep = econ.withdrawPlayer(player, amount);
+        if(!rep.transactionSuccess()){
+            System.out.println("[Lastarria] ERROR - addMoney : " + player.getName() + " => " + amount);
+        }
+
+        //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "eco take " + player.getName() + " " + amount);
     }
 
     public static void setMoney(Player player, double amount) {
@@ -77,54 +91,26 @@ public class PlayerUtils {
     }
 
     public static void addLastaCoin(Player player, int amount){
-        String uuid = player.getUniqueId().toString();
-
         int lastacoin = (int) PlayerUtils.getLastaCoin(player);
         int lastacoinAdd = lastacoin + amount;
 
-        long time = System.currentTimeMillis();
-
-        DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
-        String sql = "UPDATE player SET lastacoin = ?, update_at = ? WHERE uuid = '" + uuid + "'";
-
-        try {
-            Connection connection = playerConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-            preparedStatement.setInt(1, lastacoinAdd);
-            preparedStatement.setTimestamp(2, new Timestamp(time));
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        setDbLastacoin(player, lastacoinAdd);
     }
 
     public static void removeLastaCoin(Player player, int amount){
-        String uuid = player.getUniqueId().toString();
-
         int lastacoin = (int) PlayerUtils.getLastaCoin(player);
         int lastacoinRemove = lastacoin - amount;
 
-        long time = System.currentTimeMillis();
-
-        DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
-        String sql = "UPDATE player SET lastacoin = ?, update_at = ? WHERE uuid = '" + uuid + "'";
-
-        try {
-            Connection connection = playerConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-            preparedStatement.setInt(1, lastacoinRemove);
-            preparedStatement.setTimestamp(2, new Timestamp(time));
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        setDbLastacoin(player, lastacoinRemove);
     }
 
     public static void setLastaCoin(Player player, int amount){
+        int lastacoinSet = amount;
+
+        setDbLastacoin(player, lastacoinSet);
+    }
+
+    public static void setDbLastacoin(Player player, int lastacoin){
         String uuid = player.getUniqueId().toString();
         long time = System.currentTimeMillis();
 
@@ -135,7 +121,7 @@ public class PlayerUtils {
             Connection connection = playerConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            preparedStatement.setInt(1, amount);
+            preparedStatement.setInt(1, lastacoin);
             preparedStatement.setTimestamp(2, new Timestamp(time));
             preparedStatement.executeUpdate();
 
@@ -143,7 +129,6 @@ public class PlayerUtils {
             e.printStackTrace();
         }
     }
-
     public static void giveKey(Player player, int key, int amount) {
         String clename = "";
         switch (key) {

@@ -1,5 +1,9 @@
 package fr.kangpvp.lastarria;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import fr.kangpvp.lastarria.commands.*;
 import fr.kangpvp.lastarria.commands.CommandFly;
 import fr.kangpvp.lastarria.commands.home.CommandSethome;
@@ -11,19 +15,18 @@ import fr.kangpvp.lastarria.listener.InteractListener;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
 import fr.kangpvp.lastarria.utils.RegionManager;
-import fr.kangpvp.lastarria.utils.database.DbConnection;
 import fr.kangpvp.lastarria.utils.database.DbManager;
+import net.md_5.bungee.api.ChatColor;
+import net.milkbowl.vault.economy.Economy;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -32,6 +35,8 @@ import java.util.UUID;
 public final class Main extends JavaPlugin {
 
     public static Main INSTANCE;
+    private Economy econ = null;
+
     public static RegionManager portailTp;
     public ArrayList<Player> flying = new ArrayList<>();
 
@@ -49,7 +54,24 @@ public final class Main extends JavaPlugin {
 
         dbManager = new DbManager();
 
-        playerLastaCoin = new HashMap<>();
+        if (!setupEconomy()) {
+            System.out.println(ChatColor.RED + "[Lastarria] ERROR - Disabled due to no Vault dependency found!");
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        MongoClient client = null;
+
+        client = new MongoClient("mongodb+srv://Admin4786:znmdnB5MJSme4Mn@cluster0.cspx28h.mongodb.net/?retryWrites=true&w=majority");
+
+        MongoDatabase database = client.getDatabase("PlayerData");
+
+
+        Document document = new Document("_id", 1).append("name", "Jhon");
+
+        database.getCollection("PlayerHomes").insertOne(document);
+
+        System.out.println("Ok ca marche");
+
 
         //LoadConfigFile
         ConfigManager.getInstance().setup();
@@ -102,7 +124,23 @@ public final class Main extends JavaPlugin {
         this.dbManager.close();
     }
 
+    private boolean setupEconomy(){
+        if(getServer().getPluginManager().getPlugin("Vault") == null){
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = Bukkit.getServer().getServicesManager().getRegistration(Economy.class);
+        if(rsp == null){
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
     public DbManager getDbManager() {
         return dbManager;
+    }
+
+    public Economy getEconomy(){
+        return econ;
     }
 }
