@@ -1,5 +1,6 @@
 package fr.kangpvp.lastarria.listener;
 
+import com.mongodb.client.MongoCollection;
 import fr.kangpvp.lastarria.Main;
 import fr.kangpvp.lastarria.shop.Grade;
 import fr.kangpvp.lastarria.shop.Key;
@@ -10,6 +11,8 @@ import fr.kangpvp.lastarria.titre.Titres;
 import fr.kangpvp.lastarria.utils.ConfigManager;
 import fr.kangpvp.lastarria.utils.GamePlayer;
 import fr.kangpvp.lastarria.utils.database.DbConnection;
+import fr.kangpvp.lastarria.utils.database.MongoConnection;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,9 +44,10 @@ public class PlayerListener implements Listener {
         new GamePlayer(player.getName());
 
         DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
+        MongoConnection mongoConnection = Main.INSTANCE.getMongoManager().getMongoConnection();
+        MongoCollection<Document> collection = mongoConnection.getCollection("PlayerHomes");
 
         try{
-
             Connection connection = playerConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT uuid, name, lastacoin FROM player WHERE uuid = ?");
 
@@ -61,7 +65,8 @@ public class PlayerListener implements Listener {
 
             }else{
                 //If is the First Connection
-                createUserGrade(connection, player);
+                createUserGrade(connection, player); //Add player in SQL DB
+                createUserMongoDB(mongoConnection, player);
                 Main.INSTANCE.playerLastaCoin.put(uuid, 0);
             }
 
@@ -71,10 +76,7 @@ public class PlayerListener implements Listener {
     }
 
     private void createUserGrade(Connection connection, Player player){
-
-
         try {
-
             Statement st = connection.createStatement();
             String sql = "SELECT id FROM player ORDER BY id DESC LIMIT 1";
             ResultSet rs = st.executeQuery(sql);
@@ -108,8 +110,6 @@ public class PlayerListener implements Listener {
 
             //Location loc = new Location(Bukkit.getWorld("Aragnok"), 718.5, 74, 72.5, -90, 0);
 
-
-
             preStatCo.setString(1, uuid);
             preStatCo.setString(2, "Aragnok");
             preStatCo.setDouble(3, 718.5);
@@ -119,13 +119,24 @@ public class PlayerListener implements Listener {
             preStatCo.setFloat(7, 0);
             preStatCo.executeUpdate();
 
-
-
             System.out.println(" : TEST PreparedStatement");
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private void createUserMongoDB(MongoConnection mongoConnection, Player player){
+
+        Document document = new Document()
+                .append("id", player.getUniqueId().toString())
+                .append("name", player.getName());
+
+        mongoConnection.getCollection("PlayerHomes").insertOne(document);
+
+
+
 
     }
 

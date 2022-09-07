@@ -13,7 +13,6 @@ public class DbManager {
         return playerConnection;
     }
 
-
     public void close() {
         try{
             this.playerConnection.close();
