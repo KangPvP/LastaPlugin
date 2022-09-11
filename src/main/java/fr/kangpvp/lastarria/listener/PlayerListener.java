@@ -1,5 +1,6 @@
 package fr.kangpvp.lastarria.listener;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import fr.kangpvp.lastarria.Main;
 import fr.kangpvp.lastarria.shop.Grade;
@@ -32,6 +33,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.sql.*;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 
 public class PlayerListener implements Listener {
@@ -46,6 +48,14 @@ public class PlayerListener implements Listener {
         DbConnection playerConnection = Main.INSTANCE.getDbManager().getPlayerConnection();
         MongoConnection mongoConnection = Main.INSTANCE.getMongoManager().getMongoConnection();
         MongoCollection<Document> collection = mongoConnection.getCollection("PlayerHomes");
+
+        Document filter = new Document("name", "KangPvP2116");
+        collection.find(filter).forEach(document -> {
+            System.out.println(document.getString("id"));
+        });
+
+        //FindIterable<Document> findPublisher = mongoConnection.getCollection("PlayerHomes").find({"notes": {$gte: 13}});
+
 
         try{
             Connection connection = playerConnection.getConnection();
@@ -66,7 +76,7 @@ public class PlayerListener implements Listener {
             }else{
                 //If is the First Connection
                 createUserGrade(connection, player); //Add player in SQL DB
-                createUserMongoDB(mongoConnection, player);
+                createUserMongoDB(collection, player);
                 Main.INSTANCE.playerLastaCoin.put(uuid, 0);
             }
 
@@ -127,16 +137,13 @@ public class PlayerListener implements Listener {
 
     }
 
-    private void createUserMongoDB(MongoConnection mongoConnection, Player player){
+    private void createUserMongoDB(MongoCollection<Document> mongoCollection, Player player){
 
         Document document = new Document()
                 .append("id", player.getUniqueId().toString())
                 .append("name", player.getName());
 
-        mongoConnection.getCollection("PlayerHomes").insertOne(document);
-
-
-
+        mongoCollection.insertOne(document);
 
     }
 

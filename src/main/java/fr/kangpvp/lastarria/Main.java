@@ -8,6 +8,7 @@ import fr.kangpvp.lastarria.commands.menu.*;
 import fr.kangpvp.lastarria.commands.menu.boutique.CommandShopgrade;
 import fr.kangpvp.lastarria.commands.menu.boutique.CommandShopkey;
 import fr.kangpvp.lastarria.listener.InteractListener;
+import fr.kangpvp.lastarria.listener.ListenerManager;
 import fr.kangpvp.lastarria.listener.PlayerListener;
 import fr.kangpvp.lastarria.utils.ConfigManager;
 import fr.kangpvp.lastarria.utils.RegionManager;
@@ -26,6 +27,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public final class Main extends JavaPlugin {
@@ -50,14 +53,23 @@ public final class Main extends JavaPlugin {
 
         INSTANCE = this;
 
+        System.setProperty("DEBUG.GO", "true");
+        System.setProperty("DB.TRACE", "true");
+        Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
+        mongoLogger.setLevel(Level.WARNING);
+
         dbManager = new DbManager();
         mongoManager = new MongoManager();
+
+
 
         if (!setupEconomy()) {
             System.out.println(ChatColor.RED + "[Lastarria] ERROR - Disabled due to no Vault dependency found!");
             Bukkit.getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
+
 
         System.out.println("Ok ca marche");
 
@@ -102,10 +114,12 @@ public final class Main extends JavaPlugin {
 
         portailTp = new RegionManager(new Location(Bukkit.getWorld("Aragnok"), 675, 69, 67.5), new Location(Bukkit.getWorld("Aragnok"), 676.5, 82, 77.5));
 
-        PluginManager pm = Bukkit.getPluginManager();
+        new ListenerManager(this).RegisterListeners();
 
-        pm.registerEvents(new PlayerListener(), this);
-        pm.registerEvents(new InteractListener(), this);
+        //PluginManager pm = Bukkit.getPluginManager();
+
+        //pm.registerEvents(new PlayerListener(), this);
+        //pm.registerEvents(new InteractListener(), this);
 
     }
 
